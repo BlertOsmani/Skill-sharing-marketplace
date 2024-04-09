@@ -1,26 +1,13 @@
-<script setup>
-import { ref } from 'vue';
-
-const value = ref(null);
-</script>
-      
-<template>
-  <div class="card flex justify-content-center">
-      <InputText type="text" v-model="value" />
+<template lang="">
+  <div id="app">
+      <router-view/>
   </div>
 </template>
-
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+<script>
+export default {
+    name: 'App'
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
+</script>
+<style lang="">
+  
 </style>
