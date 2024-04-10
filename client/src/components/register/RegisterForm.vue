@@ -26,7 +26,7 @@ async function handleSubmit(){
         }
 
         try {
-            const response = await fetch("127.0.0.1:8000/users/create", {
+            const response = await fetch("127.0.0.1:8000/user/create", {
                 method: 'POST',
                 headers:{
                     'Content-Type': 'application/json'
