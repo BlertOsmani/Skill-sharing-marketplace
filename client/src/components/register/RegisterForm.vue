@@ -16,26 +16,31 @@ var confirmPasswordValid = ref(true);
 
 async function handleSubmit(){
     if(validateForm()){
-        const registrationFormData = {
-            firstName: firstName.value,
-            lastName: lastName.value,
-            email: email.value,
-            username: username.value,
-            password: password.value,
-            confirmPassword: confirmPassword.value
-        }
-
         try {
-            const response = await fetch("127.0.0.1:8000/user/create", {
+            const response = await fetch("127.0.0.1:8000/api/user/create", {
                 method: 'POST',
                 headers:{
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
                 },
-                body: JSON.stringify(registrationFormData)
+                mode: 'cors',
+                body: JSON.stringify({
+                    firstName: firstName.value,
+                    lastName: lastName.value,
+                    email: email.value,
+                    username: username.value,
+                    password: password.value,
+                    confirmPassword: confirmPassword.value
+                })
             });
             if(!response.ok){
                 throw new Error('Something went wrong. Please try again!');
             }
+            else{
+                const responseData = await response.json();
+                console.log("Response from the server: ", responseData);
+            }
+
 
         } catch (error) {
             console.log("There was a problem with the fetch operation: ", error);
