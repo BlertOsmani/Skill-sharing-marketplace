@@ -13,8 +13,16 @@ var emailValid = ref(true);
 var usernameValid = ref(true);
 var passwordValid = ref(true);
 var confirmPasswordValid = ref(true);
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
+var serverSidePasswordError = ref('');
+var serverSideConfirmPasswordError = ref('');
+var serverSideEmailError = ref('');
+var serverSideFirstNameError = ref('');
+var serverSideLastNameError = ref('');
+var serverSideUsernameError = ref('');
 
-async function handleSubmit(){
+async function handleSubmit(){  
     if(validateForm()){
         try {
             const response = await fetch("http://127.0.0.1:8000/api/user/create", {
@@ -33,12 +41,19 @@ async function handleSubmit(){
                     confirmPassword: confirmPassword.value
                 })
             });
-            if(!response.ok){
+            if(!response.ok){   
                 throw new Error('Something went wrong. Please try again!');
             }
             else{
-                const responseData = await response.json();
-                console.log("Response from the server: ", responseData);
+                const data = await response.json();
+                console.log(data);
+                if(data.errors){
+                    updateErrors(data.errors);
+                }
+                else{
+                    toast.add({ severity: 'error', summary: 'Error', detail: data.message , life: 4000 }); 
+                    resetErrors();
+                }
             }
 
 
@@ -46,6 +61,25 @@ async function handleSubmit(){
             console.log("There was a problem with the fetch operation: ", error);
         }
     }
+    
+}
+
+function updateErrors(errors) {
+    serverSidePasswordError.value = errors.password ? errors.password[0] : '';
+    serverSideConfirmPasswordError.value = errors.confirmPassword ? errors.confirmPassword[0] : '';
+    serverSideEmailError.value = errors.email ? errors.email[0] : '';
+    serverSideUsernameError.value = errors.username ? errors.username[0] : '';
+    serverSideFirstNameError.value = Array.isArray(errors.firstName) ? errors.firstName[0] : errors.firstName || '';
+    serverSideLastNameError.value = Array.isArray(errors.lastName) ? errors.lastName[0] : errors.lastName || '';
+}
+
+function resetErrors() {
+    serverSidePasswordError.value = '';
+    serverSideConfirmPasswordError.value = '';
+    serverSideEmailError.value = '';
+    serverSideUsernameError.value = '';
+    serverSideFirstNameError.value = '';
+    serverSideLastNameError.value = '';
 }
 function validateEmail(email){
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -76,32 +110,39 @@ function validateForm(){
 </script>
 
 <template lang="">
+    <Toast/>
     <form class="register-form" @submit.prevent="handleSubmit">
         <div class="register-form-fields-container">
             <div class="register-form-first-last-name-container">
                 <InputText v-model="firstName" type="text" placeholder="First name" />
                 <span v-if="!firstNameValid" class="error-message">First name is required.</span>
+                <span class="server-side-error">{{serverSideFirstNameError}}</span>
             </div>
             <div class="register-form-first-last-name-container">
                 <InputText v-model="lastName" type="text" placeholder="Last name"/>
                 <span v-if="!lastNameValid" class="error-message">Last name is required.</span>
+                <span class="server-side-error">{{serverSideLastNameError}}</span>
             </div>
         </div>
         <div class="register-form-fields-container">
             <InputText v-model="email" type="email" placeholder="Email address"/>
             <span v-if="!emailValid" class="error-message">Please enter a valid email.</span>
+            <span class="server-side-error">{{serverSideEmailError}}</span>
         </div>
         <div class="register-form-fields-container">
             <InputText v-model="username" type="text" placeholder="Username"/>
             <span v-if="!usernameValid" class="error-message">Username is required and can contain letters, numbers, -, _ only.</span>
+            <span class="server-side-error">{{serverSideUsernameError}}</span>
         </div>
         <div class="register-form-fields-container">
             <Password v-model="password" toggleMask placeholder="Password"/>
             <span v-if="!passwordValid" class="error-message">Password is required.</span>
+            <span class="server-side-error">{{serverSidePasswordError}}</span>
         </div>
         <div class="register-form-fields-container">
             <Password v-model="confirmPassword" toggleMask placeholder="Confirm password"/>
             <span v-if="!confirmPasswordValid" class="error-message">Passwords do not match.</span>
+            <span class="server-side-error">{{serverSideConfirmPasswordError}}</span>
         </div>
         <div class="register-form-submit-button-container">
             <Button class="register-submit-button" label="Sign up" @click="handleSubmit"></Button>
@@ -110,6 +151,7 @@ function validateForm(){
 </template>
 
 <script>
+import Toast from 'primevue/toast';
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
@@ -119,7 +161,8 @@ export default {
         Button,
         InputText,
         Password,
-        Checkbox
+        Checkbox,
+        Toast
     },
     setup(){
         return {handleSubmit};
@@ -129,6 +172,11 @@ export default {
 
 
 <style lang="scss">
+    .server-side-error{
+        font-size:12px;
+        color: var(--red-400);
+        margin-left:5px;
+    }
     .error-message{
         font-size:12px;
         color: var(--red-400);
