@@ -6,6 +6,7 @@ use App\Services\Services;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -15,31 +16,34 @@ class UserController extends Controller
     }
 
     public function register(Request $request){
-        $data = $this->services->requestAndValidateFields_SignUp();
+        try{
+            $data = $this->services->requestAndValidateFields_SignUp();
 
-        $userexists = $this->services->userexists_SignUp($data['email']);
+            $userexists = $this->services->userexists_SignUp($data['email']);
 
-        if($userexists){
-            return response()->json(['message' => 'User already exists'], 422);
-        }
-        else{
-            $password_salt = $this->services->generateSalt();
-            $password_hash = Hash::make($data['password'].$password_salt);
-            $user = new User();
-            $user->firstName = $data['firstName'];
-            $user->lastName = $data['lastName'];
-            $user->email = $data['email'];
-            $user->username = $data['username'];
-            $user->password_hash = $password_hash;
-            $user->password_salt = $password_salt;
-            $user->created_at = now();
-            $user->modified_at = now();
-            try{
-                $user->save();
-                return response()->json(['message' => 'User registered successfully'], 201);
-            }catch(\Exception $e){
-                return response()->json(['message' => 'Validation failed', 'errors' => $e->getMessage()], 422);
+            if($userexists){
+                return response()->json(['message' => 'User already exists'], 422);
             }
+            else{
+                $password_salt = $this->services->generateSalt();
+                $password_hash = Hash::make($data['password'].$password_salt);
+                $user = new User();
+                $user->firstName = $data['firstName'];
+                $user->lastName = $data['lastName'];
+                $user->email = $data['email'];
+                $user->username = $data['username'];
+                $user->password_hash = $password_hash;
+                $user->password_salt = $password_salt;
+                $user->created_at = now();
+                $user->modified_at = now();
+                try{
+                    $user->save();
+                    return response()->json(['message' => 'User registered successfully'], 201);
+                }catch(\Exception $e){
+                    return response()->json(['message' => 'Validation failed', 'errors' => $e->getMessage()], 422);
+                }
+        }}catch(ValidationException $e){
+            return response()->json(['errors' => $e->errors()], 422);
         }
     }
 }
