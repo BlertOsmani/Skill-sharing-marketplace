@@ -1,4 +1,7 @@
 # Skill-sharing-marketplace
+SkillSphere is a comprehensive skill-sharing marketplace web application designed for users eager to exchange and share their expertise with others. 
+Whether you're looking to teach a new skill or learn something new, SkillSphere provides a platform where users can connect, collaborate, and grow together. 
+With a user-friendly interface and a wide range of categories, SkillSphere makes it easy for individuals to find the perfect learning opportunity or to share their own unique skills with a like-minded community.
 
 ## Artisan Command Line Interface
 Artisan is the command-line interface included with Laravel. We utilized its powerful commands for various tasks throughout the development process.
