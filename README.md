@@ -12,9 +12,9 @@ To configure the database, update the `database.php` file located in the `config
 
 Below this line, you will find the definitions for all the database connections used by your application. Configure the host, port, database name, username, and password for the desired connection.
 
-Additionally, update the .env file by setting the DB_CONNECTION variable to the specified database you intend to use.
+Additionally, update the `.env` file by setting the `DB_CONNECTION` variable to the specified database you intend to use.
 
-##Migrations
+## Migrations
 In this application, migrations are utilized to manage and version-control changes to the database schema. To create a new migration in Laravel, open the terminal and execute the following command:
 
 ```php
@@ -33,15 +33,15 @@ Note: Do not delete the sessions table defined in the migrations by default when
 php artisan session:table
 ```
 
-##Object-Relational Mapping (ORM)
+## Object-Relational Mapping (ORM)
 This application's server is built with Laravel, which uses the Eloquent ORM by default.
 
-###Integration
+### Integration
 There are no specific integration steps required for using Eloquent as an ORM, as it is installed by default when creating a Laravel project.
 
-###Usage within the Application
+### Usage within the Application
 Eloquent is utilized for the following:
 
-*User Registration:
-*Checking for existing users before insertion, using the email as a unique identifier.
-*Inserting new users into the database.
+* User Registration:
+* Checking for existing users before insertion, using the email as a unique identifier.
+* Inserting new users into the database.
