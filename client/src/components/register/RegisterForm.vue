@@ -17,7 +17,7 @@ var confirmPasswordValid = ref(true);
 async function handleSubmit(){
     if(validateForm()){
         try {
-            const response = await fetch("127.0.0.1:8000/api/user/create", {
+            const response = await fetch("http://127.0.0.1:8000/api/user/create", {
                 method: 'POST',
                 headers:{
                     'Content-Type': 'application/json',

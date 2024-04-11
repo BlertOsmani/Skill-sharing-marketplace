@@ -22,7 +22,7 @@ class UserController extends Controller
             $userexists = $this->services->userexists_SignUp($data['email']);
 
             if($userexists){
-                return response()->json(['message' => 'User already exists'], 422);
+                return response()->json(['message' => 'User already exists']);
             }
             else{
                 $password_salt = $this->services->generateSalt();
@@ -38,12 +38,12 @@ class UserController extends Controller
                 $user->modified_at = now();
                 try{
                     $user->save();
-                    return response()->json(['message' => 'User registered successfully'], 201);
+                    return response()->json(['message' => 'User registered successfully']);
                 }catch(\Exception $e){
-                    return response()->json(['message' => 'Validation failed', 'errors' => $e->getMessage()], 422);
+                    return response()->json(['message' => 'Validation failed', 'errors' => $e->getMessage()]);
                 }
         }}catch(ValidationException $e){
-            return response()->json(['errors' => $e->errors()], 422);
+            return response()->json(['errors' => $e->errors()]);
         }
     }
 }
