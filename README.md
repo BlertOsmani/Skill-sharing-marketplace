@@ -27,7 +27,7 @@ After creating the migration, ensure that the database is properly configured. I
 php artisan migrate
 ```
 
-Note: Do not delete the sessions table defined in the migrations by default when creating a Laravel project, as this will prevent the application from functioning properly. If you accidentally delete it, you can recreate the sessions table using the following command:
+**Note:** Do not delete the sessions table defined in the migrations by default when creating a Laravel project, as this will prevent the application from functioning properly. If you accidentally delete it, you can recreate the sessions table using the following command:
 
 ```php 
 php artisan session:table
