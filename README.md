@@ -8,6 +8,7 @@ To configure the database, update the `database.php` file located in the `config
 
 ```php
 'default' => env('DB_CONNECTION', '<specifiedDb>'), 
+```
 
 Below this line, you will find the definitions for all the database connections used by your application. Configure the host, port, database name, username, and password for the desired connection.
 
@@ -18,16 +19,19 @@ In this application, migrations are utilized to manage and version-control chang
 
 ```php
 php artisan make:migration <name_of_migration>
+```
 
 After creating the migration, ensure that the database is properly configured. If the database is set up correctly, run the following command to apply the migrations and create the tables defined in the migration files:
 
 ```php
 php artisan migrate
+```
 
 Note: Do not delete the sessions table defined in the migrations by default when creating a Laravel project, as this will prevent the application from functioning properly. If you accidentally delete it, you can recreate the sessions table using the following command:
 
 ```php 
 php artisan session:table
+```
 
 ##Object-Relational Mapping (ORM)
 This application's server is built with Laravel, which uses the Eloquent ORM by default.
