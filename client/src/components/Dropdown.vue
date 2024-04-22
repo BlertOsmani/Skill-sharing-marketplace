@@ -1,10 +1,10 @@
 <template>
     <div class="border-200 border-solid border-1 p-2 profile-dropdown-container surface-card" :class="class">
-        <ul v-for="(column, i) in dropdownItems" :key="i" class="list-none flex flex-column p-1 m-0" :style="{ width: column.width }">
+        <ul v-for="(column, i) in dropdownItems" :key="i" class="list-none flex flex-column p-0 m-1" :style="{ width: column.width }">
             <div v-for="(group, index) in column.groups" :key="index" class="mb-2">
                 <p class="text-xs text-300 font-medium m-1">{{ group.title }}</p>
                 <li v-for="(item, idx) in group.items" :key="idx">
-                    <Link :to="item.to" class="w-12 text-left" :label="item.label" :icon="item.icon" :badge="item.badge"/>
+                    <Link :to="item.to" class="w-12 text-left" :label="item.label" :icon="item.icon" :badge="item.badge" :badgeSeverity="item.badgeSeverity"/>
                 </li>
             </div>
         </ul>
@@ -31,6 +31,10 @@ export default {
             type: Array,
             required: true,
         },
+        badgeSeverity:{
+            type:String,
+            required:false,
+        }
     },
 };
 </script>
@@ -41,9 +45,7 @@ export default {
     position: absolute;
     margin-top: 5px;
 }
-
-.profile-dropdown-messages .p-badge {
-    background-color: var(--primary-color);
-    color: var(--surface-card);
+.p-badge{
+    font-size:12px;
 }
 </style>

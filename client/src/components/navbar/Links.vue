@@ -1,6 +1,6 @@
 <template lang="">
     <div>
-        <ul class="flex flex-row align-items-center list-none">
+        <ul class="flex flex-row align-items-center list-none gap-1">
                 <li>
                     <Link to="/" label="Discover"/>
                 </li>
@@ -15,7 +15,6 @@
 </template>
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
-
 const hidden = ref(true);
 
 const toggleMenu = () => {
