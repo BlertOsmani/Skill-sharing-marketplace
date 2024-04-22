@@ -5,7 +5,7 @@ import Discover from './views/Discover.vue';
 
 const routes = [
   { path: '/register', component: Register },
-  {path : '/', component: Discover}
+  {path : '/', component: Discover},
   // Add other routes here
 ];
 

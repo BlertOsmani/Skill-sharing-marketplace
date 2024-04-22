@@ -5,7 +5,7 @@
             <p class="username">blert_osmani</p>
             <i class="pi pi-angle-down ml-1"></i>
         </Button>
-        <Dropdown class="flex flex-row w-14 right-0" v-if="!hidden" badge="2" :dropdownItems="profileDropdownItems"/>
+        <Dropdown class="flex flex-row w-14 right-0" v-if="!hidden" :dropdownItems="profileDropdownItems"/>
     </div>
 </template>
 
@@ -62,7 +62,7 @@ export default {
         return {
             profileDropdownItems: [
                 { // Width of the first column
-                    width:"100%",
+                    width:"120%",
                     groups: [
                         {
                             title: 'Learning',
@@ -74,7 +74,7 @@ export default {
                         {
                             title: 'Profile',
                             items: [
-                                { to: '/messages', label: 'Messages', icon: 'pi pi-comments', badge: '2' },
+                                { to: '/messages', label: 'Messages', icon: 'pi pi-comments', badge: '2', badgeSeverity:'contrast' },
                                 { to: '/settings', label: 'Account', icon: 'pi pi-user', badge: '' },
                                 { to: '/settings', label: 'Settings', icon: 'pi pi-cog', badge: '' },
                             ],
