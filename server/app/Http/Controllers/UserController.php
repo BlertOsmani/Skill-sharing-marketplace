@@ -35,10 +35,10 @@ class UserController extends Controller
                 $user->password_hash = $password_hash;
                 $user->password_salt = $password_salt;
                 $user->created_at = now();
-                $user->modified_at = now();
+                $user->updated_at = now();
                 try{
                     $user->save();
-                    return response()->json(['message' => 'User registered successfully']);
+                    return response()->json(['success' => 'User registered successfully']);
                 }catch(\Exception $e){
                     return response()->json(['message' => 'Validation failed', 'errors' => $e->getMessage()]);
                 }

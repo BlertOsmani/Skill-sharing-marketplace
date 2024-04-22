@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('password_hash');
             $table->string('password_salt');
             $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('modified_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
         //
     }
