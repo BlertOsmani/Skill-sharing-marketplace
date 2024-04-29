@@ -44,6 +44,7 @@ export default {
     border-radius: 8px;
     position: absolute;
     margin-top: 5px;
+    z-index:100;
 }
 .p-badge{
     font-size:12px;
