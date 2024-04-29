@@ -1,6 +1,6 @@
 <template lang="">
-    <router-link :to="to">
-        <Button :label="label" :icon="icon" text severity="secondary" :class="class" :badge="badge" :iconPos="iconPos"></Button>
+    <router-link :to="to" exact>
+        <Button :label="label" :icon="icon" text severity="secondary" :class="computeClass()" :badge="badge" :badgeSeverity="badgeSeverity" :iconPos="iconPos"></Button>
     </router-link>
 </template>
 <script>
@@ -35,9 +35,26 @@ export default {
             type:String,
             required:false,
         },
+        badgeSeverity:{
+            type:String,
+            required:false,
+        }
+    },
+    methods: {
+        computeClass() {
+            return [
+                this.class,
+                this.$route.path === this.to ? 'active-link' : ''
+            ];
+        }
     }
 }
 </script>
 <style lang="css">
-    
+.active-link {
+    /* Add your styles to highlight the active link */
+    /* For example: */
+   background-color: var(--surface-hover);
+   color: var(--primary-color);
+}
 </style>
