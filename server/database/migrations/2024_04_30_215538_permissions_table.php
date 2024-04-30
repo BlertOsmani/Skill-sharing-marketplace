@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('levels', function (Blueprint $table){
+        Schema::create('permissions', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->text('model_name');
+            $table->enum('verb', ['post', 'get']);
+            $table->text('field')->nullable();
             $table->timestamps();
         });
-        //
     }
 
     /**
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('levels');
+        Schema::dropIfExists('permissions');
     }
 };

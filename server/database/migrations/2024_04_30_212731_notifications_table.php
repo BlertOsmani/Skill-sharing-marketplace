@@ -11,16 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reviews', function (Blueprint $table){
-            $table->id();
-            $table->UnsignedBigInteger('user_id');
-            $table->UnsignedBigInteger('course_id');
-            $table->integer('rating');
-            $table->text('review_text');
-            $table->timestamps();
+
+            Schema::create('notifications', function (Blueprint $table) {
+                $table->id();
+                $table->unsignedBigInteger('user_id');
+                $table->text('title');
+                $table->text('message');
+                $table->enum('read_status', ['unread', 'read'])->default('unread');
+                $table->timestamps();
+            
+            
 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('course_id')->references('id')->on('courses');
+
         });
     }
 
@@ -29,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reviews');
+        Schema::dropIfExists('notifications');
     }
 };

@@ -19,16 +19,14 @@ return new class extends Migration
             $table->decimal('price', 10, 2);
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('level_id');
-            $table->unsignedBigInteger('language_id');
             $table->string('tags', 255)->nullable();
-            $table->string('main_video', 500);
+            $table->string('video', 500);
             $table->string('thumbnail', 255);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('category_id')->references('id')->on('category');
             $table->foreign('level_id')->references('id')->on('levels');
-            $table->foreign('language_id')->references('id')->on('languages');
         });
     }
 
