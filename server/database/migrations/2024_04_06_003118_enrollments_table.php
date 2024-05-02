@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->UnsignedBigInteger('user_id');
             $table->UnsignedBigInteger('course_id');
-            $table->text('enrollment_status');
+            $table->text('enrollment_status', 30);
             $table->timestamp('enrollment_date')->useCurrent();
 
             $table->foreign('user_id')->references('id')->on('users');

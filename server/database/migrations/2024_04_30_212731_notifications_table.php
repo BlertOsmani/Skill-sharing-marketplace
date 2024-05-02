@@ -15,8 +15,8 @@ return new class extends Migration
             Schema::create('notifications', function (Blueprint $table) {
                 $table->id();
                 $table->unsignedBigInteger('user_id');
-                $table->text('title');
-                $table->text('message');
+                $table->text('title', 255);
+                $table->text('message', 100);
                 $table->enum('read_status', ['unread', 'read'])->default('unread');
                 $table->timestamps();
             

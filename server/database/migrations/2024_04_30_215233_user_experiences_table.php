@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('user_experiences', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->text('company');
+            $table->text('company', 250);
             $table->text('location')->nullable();
             $table->timestamp('start_date');
             $table->timestamp('end_date')->nullable();

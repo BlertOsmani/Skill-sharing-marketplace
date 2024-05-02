@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
-            $table->text('model_name');
+            $table->text('model_name', 50);
             $table->enum('verb', ['post', 'get']);
             $table->text('field')->nullable();
             $table->timestamps();
