@@ -8,8 +8,8 @@ import ToastService from 'primevue/toastservice';
 
 //in main.js
 import 'primevue/resources/themes/aura-dark-green/theme.css';
-import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
+import '/node_modules/primeflex/primeflex.css';
 
 const app = createApp(App);
 app.use(PrimeVue);

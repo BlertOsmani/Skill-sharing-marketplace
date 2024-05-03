@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";
+import { useToast } from "primevue/usetoast";
 const firstName = ref();
 const lastName = ref();
 const email = ref();
@@ -13,7 +14,6 @@ var emailValid = ref(true);
 var usernameValid = ref(true);
 var passwordValid = ref(true);
 var confirmPasswordValid = ref(true);
-import { useToast } from "primevue/usetoast";
 const toast = useToast();
 var serverSidePasswordError = ref('');
 var serverSideConfirmPasswordError = ref('');
