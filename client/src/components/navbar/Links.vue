@@ -2,11 +2,11 @@
     <div>
         <ul class="flex flex-row align-items-center list-none gap-1">
                 <li>
-                    <Link to="/" label="Discover"/>
+                    <Link to="/" class="border-round-md" label="Discover" severity="secondary"/>
                 </li>
                 <li>
                     <div class="relative">
-                        <Link to="" :class="{'hovered-link': !hidden}" @click="toggleMenu" iconPos="right" label="Categories" icon="pi pi-angle-down"/>
+                        <Link to="" class="border-round-md" severity="secondary" :class="{'hovered-link': !hidden}" @click="toggleMenu" iconPos="right" label="Categories" icon="pi pi-angle-down"/>
                         <Dropdown class="flex flex-row left-0" v-if="!hidden" badge="2" :dropdownItems="profileDropdownItems"/>
                     </div>
                 </li>
@@ -37,7 +37,7 @@ onUnmounted(() => {
 </script>
 <script>
 import Dropdown from '../Dropdown.vue';
-import Link from './Link.vue';
+import Link from '../Link.vue';
 export default {
     components:{
         Link,

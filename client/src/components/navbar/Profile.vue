@@ -1,6 +1,6 @@
 <template lang="">
     <div class="relative">
-        <Button severity="secondary" text class="p-1 px-3" @click="toggleMenu" :class="{'hovered-link': !hidden}">
+        <Button severity="secondary" text class="p-1 px-3 border-round-md" @click="toggleMenu" :class="{'hovered-link': !hidden}">
             <Avatar :image="image" label="B" class="mr-2" style="background-color:var(--indigo-400); color: #2a1261" shape="circle" />
             <p class="username">blert_osmani</p>
             <i class="pi pi-angle-down ml-1"></i>
@@ -68,7 +68,7 @@ export default {
                             title: 'Learning',
                             items: [
                                 { to: '/mycourses', label: 'My courses', icon: 'pi pi-graduation-cap', badge: '' },
-                                { to: '/favorites', label: 'Favorites', icon: 'pi pi-heart', badge: '' },
+                                { to: '/favorites', label: 'Saved', icon: 'pi pi-bookmark', badge: '' },
                             ],
                         },
                         {

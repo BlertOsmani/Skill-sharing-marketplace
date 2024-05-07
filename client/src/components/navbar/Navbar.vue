@@ -1,13 +1,16 @@
 <template lang="">
-    <div class="surface-card flex flex-row justify-content-between align-items-center p-2 gap-1">
-        <div class="logo w-1 flex flex-row align-items-center">
+    <div class="surface-card flex flex-row justify-content-between align-items-center p-2 gap-1 sticky top-0 shadow-2 z-1 h-auto">
+        <div class="logo w-1 flex px-2 flex-row align-items-center">
             <Logo/>
         </div>
-        <div class="links flex flex-row align-items-center w-7 justify-content-start mx-5">
+        <div class="links flex flex-row align-items-center w-auto justify-content-start">
             <Links/>
         </div>
+        <div class="w-12">
+           <Search/>
+        </div>
         <div class="links flex flex-row align-items-center justify-content-end w-4 relative">
-            <Button severity="primary" label="Create course"></Button>
+            <Button severity="primary" label="Create course" class="py-07 px-3 border-round-md"></Button>
         </div>
         <div class="w-auto flex justify-content-end">
             <Profile/>
@@ -19,12 +22,14 @@ import Links from './Links.vue';
 import Button from 'primevue/button';
 import Logo from './Logo.vue';
 import Profile from './Profile.vue';
+import Search from '../Search.vue';
 export default {
     components:{
         Logo,
         Button,
         Links,
         Profile,
+        Search,
     }
 }
 </script>
