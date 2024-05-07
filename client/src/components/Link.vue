@@ -1,6 +1,8 @@
 <template lang="">
     <router-link :to="to" exact>
-        <Button :label="label" :icon="icon" text severity="secondary" :class="computeClass()" :badge="badge" :badgeSeverity="badgeSeverity" :iconPos="iconPos"></Button>
+        <Button :label="label" :icon="icon" text :severity="severity" :class="computeClass()" :badge="badge" :badgeSeverity="badgeSeverity" :iconPos="iconPos">
+            <slot></slot>
+        </Button>
     </router-link>
 </template>
 <script>
@@ -14,6 +16,10 @@ export default {
         to:{
             type:String,
             required: true,
+        },
+        type:{
+            type:String, 
+            required:false,
         },
         label:{
             type: String,
@@ -38,6 +44,10 @@ export default {
         badgeSeverity:{
             type:String,
             required:false,
+        },
+        severity:{
+            type:String,
+            required:false,
         }
     },
     methods: {
@@ -56,5 +66,8 @@ export default {
     /* For example: */
    background-color: var(--surface-hover);
    color: var(--primary-color);
+}
+a{
+    text-decoration:none;
 }
 </style>
