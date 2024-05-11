@@ -28,17 +28,17 @@ class UserController extends Controller
                 $password_salt = $this->services->generateSalt();
                 $password_hash = Hash::make($data['password'].$password_salt);
                 $user = new User();
-                $user->firstName = $data['firstName'];
-                $user->lastName = $data['lastName'];
+                $user->first_name = $data['firstName'];
+                $user->last_name = $data['lastName'];
                 $user->email = $data['email'];
                 $user->username = $data['username'];
-                $user->password_hash = $password_hash;
+                $user->password = $password_hash;
                 $user->password_salt = $password_salt;
                 $user->created_at = now();
-                $user->modified_at = now();
+                $user->updated_at = now();
                 try{
                     $user->save();
-                    return response()->json(['message' => 'User registered successfully']);
+                    return response()->json(['success' => 'User registered successfully']);
                 }catch(\Exception $e){
                     return response()->json(['message' => 'Validation failed', 'errors' => $e->getMessage()]);
                 }
