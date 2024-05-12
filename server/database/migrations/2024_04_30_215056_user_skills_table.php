@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('levels', function (Blueprint $table){
+        Schema::create('user_skills', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 20);
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('skill_id');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('skill_id')->references('id')->on('skills');
         });
-        //
     }
 
     /**
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('levels');
+        Schema::dropIfExists('user_skills');
     }
 };

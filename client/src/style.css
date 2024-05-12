@@ -9,3 +9,17 @@ body{
 .w-14{
     width:120%;
 }
+.flex-shrink-0{
+    flex-shrink: 0 !important;
+}
+.bg-none{
+    background:none;
+}
+.py-07{
+    padding-top:0.7rem; 
+    padding-bottom:0.7rem;
+}
+
+.p-button{
+    border:none !important;
+}
