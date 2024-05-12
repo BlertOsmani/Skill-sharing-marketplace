@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Validator;
+use Auth;
+
 
 class UserController extends Controller
 {
@@ -28,14 +31,14 @@ class UserController extends Controller
                 $password_salt = $this->services->generateSalt();
                 $password_hash = Hash::make($data['password'].$password_salt);
                 $user = new User();
-                $user->firstName = $data['firstName'];
-                $user->lastName = $data['lastName'];
+                $user->first_name = $data['firstName'];
+                $user->last_name = $data['lastName'];
                 $user->email = $data['email'];
                 $user->username = $data['username'];
-                $user->password_hash = $password_hash;
+                $user->password = $password_hash;
                 $user->password_salt = $password_salt;
                 $user->created_at = now();
-                $user->modified_at = now();
+                $user->updated_at = now();
                 try{
                     $user->save();
                     return response()->json(['message' => 'User registered successfully']);
@@ -45,5 +48,48 @@ class UserController extends Controller
         }}catch(ValidationException $e){
             return response()->json(['errors' => $e->errors()]);
         }
+    }
+
+    public function login(Request $request){
+        try {
+            $validator = Validator::make($request->all(), [
+                'username' => 'required',
+                'password' => 'required|string'
+            ]);
+    
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 422);
+            }
+            
+            $user = User::where('username', $request->username)->first();
+    
+            if (!$user) {
+                return response()->json(['error' => 'User not found with username: ' . $request->username], 404);
+            }
+            $passwordWithSalt = $request->password.$user->password_salt;
+            
+    
+            if (!Hash::check($passwordWithSalt, $user->password)) {
+                return response()->json(['error' => 'Incorrect password for user: ' . $user->username], 401);
+            }
+    
+            if (!$token = auth()->attempt(['username' => $request->username, 'password' => $passwordWithSalt])) {
+                return response()->json(['error' => 'Authentication failed for user: ' . $request->username], 401);
+            }
+    
+            return $this->createNewToken($token);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Something went wrong. Please try again.'], 500);
+        }
+    }
+    
+    public function createNewToken($token){
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL()*60,
+            'user' => auth()->user()
+        ]);
+
     }
 }
