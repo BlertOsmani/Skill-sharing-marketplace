@@ -14,19 +14,22 @@ var serverSideUsernameError = ref("");
 async function handleSubmit() {
   if (validateForm()) {
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/user/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        mode: "cors",
-        body: JSON.stringify({
-          username: username.value,
-          password: password.value,
-          rememberMe: rememberMe.value,
-        }),
-      });
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/auth/user/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+          mode: "cors",
+          body: JSON.stringify({
+            username: username.value,
+            password: password.value,
+            rememberMe: rememberMe.value,
+          }),
+        }
+      );
       if (!response.ok) {
         throw new Error("Something went wrong. Please try again!");
       } else {

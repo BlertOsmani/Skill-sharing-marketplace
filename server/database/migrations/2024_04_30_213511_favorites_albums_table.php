@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('levels', function (Blueprint $table){
+        Schema::create('favorites_albums', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 20);
+            $table->unsignedBigInteger('user_id');
+            $table->text('title');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
-        //
     }
 
     /**
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('levels');
+        Schema::dropIfExists('favorites_albums');
     }
 };
