@@ -48,13 +48,17 @@ export default {
         severity:{
             type:String,
             required:false,
+        },
+        highlight: {
+            type: Boolean,
+            default: true,
         }
     },
     methods: {
         computeClass() {
             return [
                 this.class,
-                this.$route.path === this.to ? 'active-link' : ''
+                this.highlight && this.$route.path === this.to ? 'active-link' : ''
             ];
         }
     }

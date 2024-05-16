@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Services\Services;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Carbon\Carbon;
+use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
@@ -44,6 +47,38 @@ class UserController extends Controller
                 }
         }}catch(ValidationException $e){
             return response()->json(['errors' => $e->errors()]);
+        }
+    }
+
+    public function getTopTutors(){
+        try{
+            $pastWeek = Carbon::now()->subWeek();
+
+            $tutors = DB::table('users')
+                ->select(
+                    'users.id as tutor_id',
+                    DB::raw('Concat(users.first_name, " ", users.last_name) as tutor_name'),
+                    'users.profile_picture as profile_picture',
+                    'users.username as tutor_username',
+                    DB::raw('ROUND(IFNULL(AVG(reviews.rating), 0), 1) as average_rating'),
+                )
+                ->leftJoin('courses', 'courses.user_id' , '=', 'users.id')
+                ->leftJoin('enrollments', function($join) use ($pastWeek){
+                    $join->on('enrollments.course_id', '=', 'courses.id')
+                    ->where('enrollments.enrollment_date',  '>=', $pastWeek);
+                })
+                ->leftJoin('reviews', 'reviews.course_id', '=', 'courses.id')
+                ->groupBy('users.id', 'users.first_name', 'users.last_name', 'users.profile_picture')
+                ->orderByRaw('Count(Distinct courses.id) Desc, Count(enrollments.id) Desc, Avg(reviews.rating) Desc')
+                ->limit(5)
+                ->get();
+
+            if($tutors->isEmpty()){
+                return response()->json(['message' => "Not tutors found"]);
+            }
+            return response()->json($tutors);
+        }catch(Exception $e){
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 }

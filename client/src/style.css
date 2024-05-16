@@ -13,13 +13,36 @@ body{
     flex-shrink: 0 !important;
 }
 .bg-none{
-    background:none;
+    background: none !important;
 }
 .py-07{
     padding-top:0.7rem; 
     padding-bottom:0.7rem;
 }
+.h-2point5rem{
+    height:2.5rem;
+}
 
-.p-button{
-    border:none !important;
+.w-custom{
+    width:calc(25% - 12px);
+    max-width:calc(25% - 12px);
+}
+
+@media (max-width: 1200px) {
+    .w-custom {
+      width:calc(33.33% - 12px); 
+      max-width: calc(33.33% - 12px);/* Ensure max-width of cards */
+    }
+}
+@media (max-width: 768px) {
+    .w-custom {
+      width:calc(50% - 12px);
+      max-width: calc(50% - 12px);/* Ensure max-width of cards */
+    }
+}
+@media (max-width: 576px) {
+    .w-custom {
+        width:calc(50% - 12px);
+        max-width: calc(50% - 12px);;/* Ensure max-width of cards */
+    }
 }

@@ -10,7 +10,7 @@
            <Search/>
         </div>
         <div class="links flex flex-row align-items-center justify-content-end w-4 relative">
-            <Button severity="primary" label="Create course" class="py-07 px-3 border-round-md"></Button>
+            <Button severity="primary" label="Create course" class="h-2point5rem px-3 border-round-md"></Button>
         </div>
         <div class="w-auto flex justify-content-end">
             <Profile/>

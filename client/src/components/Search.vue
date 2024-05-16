@@ -2,7 +2,7 @@
     <div>
         <IconField iconPosition="left">
                 <InputIcon class="pi pi-search"></InputIcon>
-                <InputText v-model="data" placeholder="Search for courses, skills, channels" class="w-7 py-07 border-round-md"/>
+                <InputText v-model="data" placeholder="Search for courses, skills, channels" class="w-7 h-2point5rem border-round-md"/>
         </IconField>
     </div>
 </template>
