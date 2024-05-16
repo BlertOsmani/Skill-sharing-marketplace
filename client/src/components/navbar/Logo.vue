@@ -1,15 +1,19 @@
 <template lang="">
-    <div class="flex flex-row justify-content-center align-items-center gap-1">
-        <img :src="logoUrl" alt="Image" width="40" height="40"/>
-        <div class="flex flex-column justify-content-center">
+        <Link to="/" class="bg-none flex flex-row justify-content-center align-items-center gap-1" :highlight="false">
+            <img :src="logoUrl" alt="Image" width="40" height="40"/>
+            <div class="flex flex-column justify-content-center">
                 <h4 class="brandName text-primary">Skill</h4>
                 <h4 class="brandName text-primary">Sphere</h4>
-        </div>
-    </div>
+            </div>
+        </Link>    
 </template>
 <script>
 import logo from '../../assets/images/skillsphere-logo.png';
+import Link from '../Link.vue';
 export default {
+    components:{
+        Link
+    },
     data(){
         return{
             logoUrl : logo
