@@ -38,4 +38,8 @@ class CourseController extends Controller
             return response()->json(['error' => $e->getMessage()]);
         }
     }
+
+    public function getFeaturedCourses(Request $request){
+        
+    }
 }

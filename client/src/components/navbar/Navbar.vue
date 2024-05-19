@@ -7,7 +7,7 @@
             <Links/>
         </div>
         <div class="w-12">
-           <Search/>
+           <SearchInput/>
         </div>
         <div class="links flex flex-row align-items-center justify-content-end w-4 relative">
             <Button severity="primary" label="Create course" class="h-2point5rem px-3 border-round-md"></Button>
@@ -22,14 +22,14 @@ import Links from './Links.vue';
 import Button from 'primevue/button';
 import Logo from './Logo.vue';
 import Profile from './Profile.vue';
-import Search from '../Search.vue';
+import SearchInput from '../SearchInput.vue';
 export default {
     components:{
         Logo,
         Button,
         Links,
         Profile,
-        Search,
+        SearchInput,
     }
 }
 </script>
