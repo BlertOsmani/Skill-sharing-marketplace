@@ -5,7 +5,7 @@
         <h1>Welcome Back to SkillSphere</h1>
         <p>Log in to continue your journey</p>
       </div>
-      <div>
+      <div class="login-content">
         <h2 class="create-your-account-text">Sign In</h2>
         <LoginForm />
         <span style="margin: 1.2rem 0 2rem 0">
@@ -21,7 +21,7 @@
 
 <script>
 import LoginForm from "../components/login/LoginForm.vue";
-import LoginWithGoogle from "../components/register/RegisterWithGoogle.vue";
+import LoginWithGoogle from "../components/login/LoginWithGoogle.vue";
 import Button from "primevue/button";
 
 export default {
@@ -82,12 +82,13 @@ p {
   justify-content: space-between;
 }
 
-.login-form-container > div:last-child {
+.login-content {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 2rem;
+  width: 100%;
 }
 
 .login-form-container .background-image-container {
@@ -115,10 +116,6 @@ p {
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.3); /* Black transparent curtain */
   z-index: 1; /* Ensure the curtain is behind the text */
-}
-
-.login-form-container > div:last-child > span {
-  margin-top: 1rem;
 }
 
 .background-image-container h1,

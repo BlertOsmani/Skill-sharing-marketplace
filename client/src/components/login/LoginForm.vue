@@ -5,11 +5,11 @@ import { useToast } from "primevue/usetoast";
 const username = ref("");
 const password = ref("");
 const rememberMe = ref(false);
-var usernameValid = ref(true);
-var passwordValid = ref(true);
+const usernameValid = ref(true);
+const passwordValid = ref(true);
 const toast = useToast();
-var serverSidePasswordError = ref("");
-var serverSideUsernameError = ref("");
+const serverSidePasswordError = ref("");
+const serverSideUsernameError = ref("");
 
 async function handleSubmit() {
   if (validateForm()) {
@@ -31,14 +31,13 @@ async function handleSubmit() {
         throw new Error("Something went wrong. Please try again!");
       } else {
         const data = await response.json();
-        console.log(data);
         if (data.errors) {
           updateErrors(data.errors);
         } else {
           toast.add({
-            severity: "error",
-            summary: "Error",
-            detail: data.message,
+            severity: "success",
+            summary: "Success",
+            detail: "Login successful",
             life: 4000,
           });
           resetErrors();
@@ -46,6 +45,12 @@ async function handleSubmit() {
       }
     } catch (error) {
       console.log("There was a problem with the fetch operation: ", error);
+      toast.add({
+        severity: "error",
+        summary: "Error",
+        detail: error.message,
+        life: 4000,
+      });
     }
   }
 }
@@ -67,85 +72,54 @@ function validateForm() {
   return usernameValid.value && passwordValid.value;
 }
 </script>
+
 <template>
   <Toast />
-  <form class="login-form" @submit.prevent="handleSubmit">
-    <div class="login-form-fields-container">
+  <form
+    class="p-fluid grid formgrid sm:w-12 md:w-8 lg:w-6"
+    @submit.prevent="handleSubmit"
+  >
+    <div class="field col-12">
+      <label for="username">Username</label>
       <InputText
+        id="username"
         v-model="username"
         type="text"
+        class="w-full"
         placeholder="Username"
-        class="login-fields"
       />
-      <span v-if="!usernameValid" class="error-message"
-        >Username is required.</span
-      >
-      <span class="server-side-error">{{ serverSideUsernameError }}</span>
+      <small v-if="!usernameValid" class="p-error">Username is required.</small>
+      <small class="p-error">{{ serverSideUsernameError }}</small>
     </div>
-    <div class="login-form-fields-container">
+    <div class="field col-12">
+      <label for="password">Password</label>
       <Password
+        id="password"
         v-model="password"
         toggleMask
+        class="w-full"
         placeholder="Password"
-        class="login-fields"
       />
-      <span v-if="!passwordValid" class="error-message"
-        >Password is required.</span
-      >
-      <span class="server-side-error">{{ serverSidePasswordError }}</span>
+      <small v-if="!passwordValid" class="p-error">Password is required.</small>
+      <small class="p-error">{{ serverSidePasswordError }}</small>
     </div>
-    <div class="login-form-remember-me">
-      <Checkbox
-        v-model="rememberMe"
-        binary="true"
-        class="remember-me-checkbox"
-      />
-      <label for="rememberMe" class="remember-me-label">Remember Me</label>
+    <div class="field-checkbox col-12">
+      <Checkbox inputId="rememberMe" v-model="rememberMe" binary="true" />
+      <label for="rememberMe">Remember Me</label>
     </div>
-    <div class="login-form-submit-button-container">
-      <Button class="login-submit-button" label="Login" @click="handleSubmit" />
+    <div class="col-12">
+      <Button class="w-full" label="Login" @click="handleSubmit" />
     </div>
   </form>
 </template>
 
 <style scoped>
-.login-form {
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-.login-form-fields-container {
-  margin-bottom: 1rem;
-  margin-right: 0;
-}
-.login-fields {
-  width: 100%;
-}
-
-.login-form-remember-me {
-  display: flex;
-  align-items: center;
+.p-fluid .col-12 {
   margin-bottom: 1rem;
 }
-
-.login-form-submit-button-container {
-  text-align: center;
-}
-
-.error-message {
+.p-error {
   color: red;
-}
-
-.server-side-error {
-  color: red;
-  font-size: 0.8rem;
-  margin-top: 0.2rem;
-}
-.remember-me-checkbox {
-  margin-right: 1rem;
-}
-.remember-me-label {
-  color: white;
+  font-size: 0.875rem;
 }
 </style>
 
@@ -155,6 +129,7 @@ import Button from "primevue/button";
 import InputText from "primevue/inputtext";
 import Password from "primevue/password";
 import Checkbox from "primevue/checkbox";
+
 export default {
   components: {
     Button,
