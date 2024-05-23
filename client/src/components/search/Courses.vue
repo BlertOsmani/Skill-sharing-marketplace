@@ -16,7 +16,7 @@
                         <p class="text-base font-semibold text-900 mt-3 mb-0">{{title}}</p>
                         <p class="text-xs font-semibold text-400">{{author}}</p>
                     </div>
-                    <div class="flex flex-row justify-content-between mt-4">
+                    <div class="flex flex-row justify-content-between mt-4 mb-2">
                         <div class="flex flex-row align-items-center">
                             <p class="text-xs text-400 font-semibold">{{info}}</p>
                             <Dot v-if="showDot"/>
