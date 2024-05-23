@@ -17,5 +17,8 @@ Route::post('/user/create', [UserController::class, 'register']);
 Route::get('/course/enrolled', [CourseController::class, 'getEnrolledCourses']);
 
 Route::get('/user/toptutors', [UserController::class, 'getTopTutors']);
+Route::get('/user/toptutors', [UserController::class, 'getTopTutors']);
 
 Route::get('/search',[SearchController::class, 'search']);
+
+Route::get('/course/featured', [CourseController::class, 'getFeaturedCourses']);

@@ -1,6 +1,6 @@
 <template>
-    <div class="card border-round-md surface-card w-custom flex flex-column">
-      <Link to="/" :highlight="false" class="align-items-stretch border-round-md surface-card flex-shrink-0 w-12 p-0 flex flex-column" @mouseover="showIcon" @mouseleave="hideIcon">
+    <div class="card border-round-md surface-card w-custom-card flex flex-column">
+      <Link to="/" :highlight="false" class="align-items-stretch border-round-md surface-card flex-shrink-0 p-0 flex flex-column" @mouseover="showIcon" @mouseleave="hideIcon">
       <p class="hidden">{{ id }}</p>
       <div class="flex flex-column relative">
         <img :src="coverPhoto" class="course-image border-round-md border-noround-bottom" alt="Image" />

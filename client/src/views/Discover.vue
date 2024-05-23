@@ -4,7 +4,6 @@
         <EnrolledCourses/>
         <TopTutors/>
         <FeaturedCourses/>
-        <RecommendedCourses/>
     </div>
 </template>
 <script>
@@ -12,7 +11,6 @@ import Navbar from '../components/navbar/Navbar.vue';
 import ContinueLearning from '../components/discover/ContinueLearning.vue';
 import EnrolledCourses from '../components/discover/EnrolledCourses.vue';
 import TopTutors from '../components/discover/TopTutors.vue';
-import RecommendedCourses from '../components/discover/RecommendedCourses.vue';
 import FeaturedCourses from '../components/discover/FeaturedCourses.vue';
 export default {
     name: 'Discover',
@@ -21,7 +19,6 @@ export default {
         ContinueLearning,
         EnrolledCourses,
         TopTutors,
-        RecommendedCourses,
         FeaturedCourses,
     }
 }
