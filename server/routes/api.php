@@ -5,8 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\SearchController;
-use App\Models\Favorite;
-use App\Models\FavoriteAlbum;
+use App\Http\Controllers\FavoritesController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -22,3 +21,9 @@ Route::get('/user/toptutors', [UserController::class, 'getTopTutors']);
 Route::get('/search',[SearchController::class, 'search']);
 
 Route::get('/course/featured', [CourseController::class, 'getFeaturedCourses']);
+
+Route::post('/album/create', [FavoritesController::class, 'createAlbum']);
+
+Route::get('/album/get', [FavoritesController::class, 'getAlbums']);
+
+Route::post('/course/save', [FavoritesController::class, 'saveCourse']);

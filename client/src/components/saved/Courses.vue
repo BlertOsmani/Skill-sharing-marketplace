@@ -1,5 +1,5 @@
 <template lang="">
-    <div class="flex w-custom-card surface-card border-round-md mb-4">
+    <div>
         <Courses
             :id = "id"
             :thumbnail =  "thumbnail"

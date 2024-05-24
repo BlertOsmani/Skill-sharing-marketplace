@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Favorite extends Model
 {
     use HasFactory;
+    public function albums(){
+        return $this->belongsToMany(FavoriteAlbum::class);
+    }
 }
