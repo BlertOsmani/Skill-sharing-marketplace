@@ -1,121 +1,121 @@
 <template>
-    <div class="container">
-      <div class="form-frame">
-        <form @submit.prevent="handleSubmit" class="form-content">
+  <div class="container">
+    <div class="form-frame mb-5">
+      <div v-if="emailSent" class="success-message border-primary-500">
+        <p class="text-primary">Check your email for reset link.</p>
+      </div>
+      <div>
+        <form @submit.prevent="submitEmail" class="form-content">
           <h3 class="form-title">Forgot Password</h3>
           <p class="form-paragraph">Enter the email address associated with your account and we'll send you a link to reset your password</p>
           <div class="form-group">
             <InputText v-model="email" type="email" placeholder="Email address" class="custom-input"/>
             <span v-if="!isEmailValid && email !== ''" class="error-message">Please enter a valid email.</span>
-            <span class="server-side-error">{{serverSideEmailError}}</span>
           </div>
-          <Button label="Send" type="submit" class="custom-button"></Button>
+          <Button label="Send Reset Link" type="submit" class="custom-button"></Button>
         </form>
-        <div class="bottom-text">
-          <span style="margin:1.2rem 0 2rem 0;">Already have an account? <Button style="padding:0;" label="Sign in" link></Button></span>
-        </div>
       </div>
     </div>
-  </template>
-  
-  <script>
-  import Button from 'primevue/button';
-  import InputText from 'primevue/inputtext';
-  import axios from 'axios';
-  
-  export default {
-    components: {
-      Button,
-      InputText
+  </div>
+</template>
+
+<script>
+import Button from 'primevue/button';
+import InputText from 'primevue/inputtext';
+import axios from 'axios';
+
+export default {
+  components: {
+    Button,
+    InputText
+  },
+  name: 'Forgot',
+  data() {
+    return {
+      email: '',
+      emailSent: false
+    }
+  },
+  methods: {
+    isEmailValid() {
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return regex.test(this.email);
     },
-    name: 'Forgot',
-    data() {
-      return {
-        email: '',
-        serverSideEmailError: ''
-      }
-    },
-    computed: {
-      isEmailValid() {
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return regex.test(this.email);
-      }
-    },
-    methods: {
-      async handleSubmit() {
-        const response = await axios.post('forgot', {
-            email: this.email
-        });
-        console.log(response);
+    async submitEmail() {
+      if (!this.isEmailValid()) {
+        return;
+    }
+
+      try {
+        const response = await axios.post('http://localhost:8000/api/forgot', { email: this.email });
+        if(response.data.message){
+          this.emailSent = true;
+        }
+      } catch (error) {
+        if (error.response) {
+          alert(error.response.data.error || 'An error occurred. Please try again.');
+        } else {
+          alert('An error occurred. Please try again.');
+        }
       }
     }
   }
-  </script>
-  
-  <style>
-  .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .form-frame {
-    width: 410px; /* Increased width */
-    height: 350px; /* Increased height */
-    padding: 20px;
-    border-radius: 8px; /* Increased border radius */
-    position: relative; /* Position relative for positioning the bottom text */
-    background-color: var(--surface-card);
-  }
-  
-  .form-content {
-    margin: 0; /* Remove default margin */
-  }
-  
-  .form-title {
-    margin-bottom: 25px; /* Increased margin-bottom */
-    text-align: center;
-    font-size: 22px; /* Increased font size */
-  }
-  
-  .form-paragraph {
-    font-size: 14px; /* Decreased font size */
-    margin-bottom: 15px; /* Increased margin-bottom */
-    width: 100%; /* Increased width */
-  }
-  
-  .form-group {
-    margin-bottom: 0;
-    margin-top: 30px;
-  }
-  
-  .custom-input {
-    width: 100%; /* Set input text width to 100% */
-  }
-  
-  .custom-button {
-    width: 100%; /* Set button width to 100% */
-    margin-top: 8px;
-  }
-  
-  .bottom-text {
-    position: absolute;
-    bottom: 30px; /* Adjust the distance from the bottom */
-    left: 0;
-    width: 100%;
-    text-align: center;
-    margin-bottom: 5px;
-  }
-  
-  .bottom-text span {
-    margin-right: 5px;
-  }
-  
-  .error-message {
-    color: red;
-  }
-  
-  /* Styles for InputText and Button components can be added if needed */
-  </style>
-  
+};
+</script>
+
+<style>
+
+.form-frame {
+  position:absolute;
+  transform: translate(-50%,-50%);
+  top:50%;
+  left:50%;
+  width: 410px;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: var(--surface-card);
+}
+
+.form-content {
+  margin: 0;
+}
+
+.form-title {
+  margin-bottom: 25px;
+  text-align: center;
+  font-size: 22px;
+}
+
+.form-paragraph {
+  font-size: 14px;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 0;
+  margin-top: 30px;
+}
+
+.custom-input {
+  width: 100%;
+  padding: 12px;
+}
+
+.custom-button {
+  width: 100%;
+  margin-top: 20px;
+  padding: 12px;
+}
+
+.error-message {
+  color: red;
+}
+
+.success-message {
+  text-align: center;
+  background-color: var(--highlight-bg);
+  border-radius: var(--border-radius); 
+  padding: 20px; /* Adjust padding as needed */ /* Limit the maximum width of the success message */
+}
+</style>
