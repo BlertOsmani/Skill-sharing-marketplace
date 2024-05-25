@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from "vue";
 import { useToast } from "primevue/usetoast";
+import { useRouter } from 'vue-router'; // Import useRouter
+const router = useRouter();
 const firstName = ref();
 const lastName = ref();
 const email = ref();
@@ -55,7 +57,7 @@ async function handleSubmit(){
                     resetErrors();
                 }
                 else{
-                    toast.add({ severity: 'success', summary: 'Success', detail: data.success , life: 4000 }); 
+                    router.push('/login');
                     resetErrors();
                 }
             }
