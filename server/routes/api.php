@@ -10,6 +10,7 @@ use App\Models\Favorite;
 use App\Models\FavoriteAlbum;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\CategoryController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -36,3 +37,5 @@ Route::get('/album/saved/get', [FavoritesController::class, 'getSavedCourses']);
 Route::post('/forgot', [ForgotPasswordController::class, 'sendResetLinkEmail']);
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+
+Route::get('/category', [CategoryController::class, 'getCoursesByCategory']);

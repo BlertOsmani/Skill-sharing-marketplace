@@ -7,6 +7,7 @@ import ResetPassword from './views/ResetPassword.vue';
 import Search from './views/Search.vue';
 import Albums from './views/Albums.vue';
 import AlbumCourses from './views/AlbumCourse.vue';
+import Categories from './views/Categories.vue';
 
 const routes = [
   { path: '/register', component: Register },
@@ -16,6 +17,7 @@ const routes = [
   {path: '/saved/album', component: AlbumCourses},
   { path : '/forgotpassword', component: ForgotPassword},
   { path : '/resetpassword', component: ResetPassword},
+  { path : '/categories', component: Categories},
 ];
 
 const router = createRouter({
