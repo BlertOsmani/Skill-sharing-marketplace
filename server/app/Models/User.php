@@ -13,4 +13,10 @@ class User extends Authenticatable
     public function courses(){
         return $this->hasMany(Course::class);
     }
+    public function favorites(){
+        return $this->hasMany(Favorite::class);
+    }
+    public function favoriteAlbums(){
+        return $this->hasMany(FavoriteAlbum::class);
+    }
 }

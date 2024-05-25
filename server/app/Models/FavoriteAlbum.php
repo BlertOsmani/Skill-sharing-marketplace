@@ -12,4 +12,7 @@ class FavoriteAlbum extends Model
     public function favorites(){
         return $this->hasMany(Favorite::class, 'album_id');
     }
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

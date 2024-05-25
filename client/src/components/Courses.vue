@@ -1,5 +1,5 @@
 <template lang="">
-        <Link to="" class="surface-card flex flex-column p-0" @mouseover="showIcon" @mouseleave="hideIcon">
+        <Link to="" :class="customClass" class="surface-card flex flex-column p-0" @mouseover="showIcon" @mouseleave="hideIcon">
             <div class="flex flex-column w-12">
                 <p class="hidden">{{id}}</p>
                 <div class="flex flex-column relative">
@@ -68,6 +68,7 @@ export default {
         info:String,
         duration: String,
         enrolled: String,
+        customClass: String,
     },
     computed:{
         showDot() {

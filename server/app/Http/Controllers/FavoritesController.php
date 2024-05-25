@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Favorite;
 use App\Models\FavoriteAlbum;
 use Illuminate\Http\Request;
+use App\Models\Course;
 
 class FavoritesController extends Controller
 {
@@ -55,6 +56,28 @@ class FavoritesController extends Controller
     }
 
     public function getSavedCourses(Request $request){
+        $albumId = $request->input('albumId');
+        $favoriteCourses = Favorite::where('album_id', $albumId)
+            ->with(['course.user', 'course.category', 'course.lessons', 'course.enrollments'])
+            ->get()
+            ->map(function($favorite) {
+                $course = $favorite->course;
+                return [
+                    'course_id' => $course->id,
+                    'course_title' => $course->title,
+                    'course_tags' => $course->tags,
+                    'course_thumbnail' => $course->thumbnail,
+                    'author' => $course->user->first_name . ' ' . $course->user->last_name,
+                    'category_name' => $course->category->name,
+                    'course_price' => $course->price,
+                    'number_of_lessons' => $course->lessons->count(),
+                    'number_of_enrollments' => $course->enrollments->count(),
+                ];
+            });
 
+        if($favoriteCourses->isEmpty()){
+            return response()->json(['error' => "No saved courses in this album"]);
+        }
+        return response()->json($favoriteCourses);
     }
 }

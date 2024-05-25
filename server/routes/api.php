@@ -27,3 +27,5 @@ Route::post('/album/create', [FavoritesController::class, 'createAlbum']);
 Route::get('/album/get', [FavoritesController::class, 'getAlbums']);
 
 Route::post('/course/save', [FavoritesController::class, 'saveCourse']);
+
+Route::get('/album/saved/get', [FavoritesController::class, 'getSavedCourses']);

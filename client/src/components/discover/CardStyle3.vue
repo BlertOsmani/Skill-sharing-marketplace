@@ -23,7 +23,14 @@
                             <p class="text-xs text-400 font-semibold">{{duration}}</p>
                         </div>
                         <div class="flex justify-content-end align-items-center">
-                            <i class="pi pi-bookmark text-400 text-lg"></i>
+                            <Button icon="pi pi-bookmark text-lg" severity="secondary" @click="dialogVisible = true" text></Button>
+                            <SaveCourseDialog
+                                :visible="dialogVisible"
+                                @update:visible="dialogVisible = $event"
+                                :title="courseTitle"
+                                :createAlbum="createAlbum"
+                                :id="id"
+                            />
                         </div>
                     </div>
                 </div>
@@ -32,15 +39,27 @@
     </div>
 </template>
 <script>
+import Button from 'primevue/button';
 import Dot from '../Dot.vue';
 import Tag from 'primevue/tag';
 import uiUxCourse2 from '../../assets/images/ui-ux-course-2.jpg';
+import SaveCourseDialog from '../saved/SaveCourseDialog.vue';
 import Link from '../Link.vue';
 export default {
     components:{
         Link,
         Tag,
         Dot,
+        SaveCourseDialog,
+        Button
+    },
+    data() {
+        return {
+            dialogVisible: false,
+            courseTitle: this.title,
+            createAlbum: false,
+            id: this.id,
+        };
     },
     props:{
         id: Number,
