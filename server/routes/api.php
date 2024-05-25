@@ -7,6 +7,8 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\SearchController;
 use App\Models\Favorite;
 use App\Models\FavoriteAlbum;
+use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\ResetPasswordController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -22,3 +24,8 @@ Route::get('/user/toptutors', [UserController::class, 'getTopTutors']);
 Route::get('/search',[SearchController::class, 'search']);
 
 Route::get('/course/featured', [CourseController::class, 'getFeaturedCourses']);
+
+
+Route::post('/forgot', [ForgotPasswordController::class, 'sendResetLinkEmail']);
+Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
