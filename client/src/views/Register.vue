@@ -3,7 +3,7 @@
         <div class="register-form-container">
             <div class="background-image-container">
                 <h1>Welcome to SkillSphere</h1>
-                <p>Elevate your skills, elevate your life</p>
+                <p class="slogan">Elevate your skills, elevate your life</p>
             </div>
             <div>
                 <h2 class="create-your-account-text">Sign Up</h2>
@@ -35,7 +35,7 @@ export default {
     input, button, label, span{
         font-size:14px;
     }
-    p{
+    .slogan{
         font-size:18px;
     }
     .orRegisterOption {

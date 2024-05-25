@@ -47,11 +47,15 @@ async function handleSubmit(){
             else{
                 const data = await response.json();
                 console.log(data);
-                if(data.errors){
+                if(data.errors){    
                     updateErrors(data.errors);
                 }
-                else{
+                else if(data.message){
                     toast.add({ severity: 'error', summary: 'Error', detail: data.message , life: 4000 }); 
+                    resetErrors();
+                }
+                else{
+                    toast.add({ severity: 'success', summary: 'Success', detail: data.success , life: 4000 }); 
                     resetErrors();
                 }
             }

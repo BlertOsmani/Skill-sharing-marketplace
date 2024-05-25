@@ -16,8 +16,8 @@ return new class extends Migration
             $table->UnsignedBigInteger('user_id');
             $table->UnsignedBigInteger('course_id');
             $table->integer('rating');
-            $table->text('review_text');
-            $table->timestamp('created_at')->useCurrent();
+            $table->text('review_text', 200);
+            $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('course_id')->references('id')->on('courses');
