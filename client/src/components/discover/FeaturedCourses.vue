@@ -10,6 +10,7 @@
           :key="index"
           :thumbnail="card.thumbnail"
           :title="card.title"
+          :id="card.id"
           :author="card.author"
           :maxLength="maxLength"
           :enrolled="card.enrolled"
