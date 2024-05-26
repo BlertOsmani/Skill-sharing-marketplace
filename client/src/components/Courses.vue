@@ -1,8 +1,7 @@
 <template lang="">
-    <div class="flex w-custom-card surface-card border-round-md mb-4">
-        <Link :to="{path: '/course/details', query:{course_id: id}}" class="surface-card flex flex-column p-0" @mouseover="showIcon" @mouseleave="hideIcon">
+        <Link :to="{path: '/course/details', query:{course_id: id}}" :class="customClass" class="surface-card flex flex-column p-0" @mouseover="showIcon" @mouseleave="hideIcon">
             <div class="flex flex-column w-12">
-                <p class="hidden">{{id}}</p>
+                <p class="hidden">{{id}}</p>        
                 <div class="flex flex-column relative">
                     <img class="w-12" :src="thumbnail" alt="">
                     <i class="pi pi-play-circle text-3xl text-900 absolute top-50 left-50 translate-5050" :class="{ hidden: !isIconVisible }"></i>
@@ -36,22 +35,21 @@
                 </div>
             </div>
         </Link>
-    </div>
 </template>
 <script>
+import Dot from './Dot.vue';
 import Button from 'primevue/button';
-import Dot from '../Dot.vue';
 import Tag from 'primevue/tag';
-import uiUxCourse2 from '../../assets/images/ui-ux-course-2.jpg';
-import SaveCourseDialog from '../saved/SaveCourseDialog.vue';
-import Link from '../Link.vue';
+import Link from './Link.vue';
+import SaveCourseDialog from './saved/SaveCourseDialog.vue';
+
 export default {
     components:{
         Link,
         Tag,
         Dot,
-        SaveCourseDialog,
-        Button
+        Button,
+        SaveCourseDialog
     },
     data() {
         return {
@@ -70,17 +68,12 @@ export default {
         info:String,
         duration: String,
         enrolled: String,
-        price:String,
+        customClass: String,
     },
     computed:{
         showDot() {
             return this.info && this.duration;
         },
-    },
-    data(){
-        return{
-            isIconVisible: false,
-        }
     },
     methods:{
       showIcon(){

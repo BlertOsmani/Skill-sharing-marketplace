@@ -10,6 +10,7 @@
           :key="index"
           :coverPhoto="card.coverPhoto"
           :title="card.title"
+          :id="card.id"
           :author="card.author"
           :username="card.username"
           :courseInfo="card.courseInfo"

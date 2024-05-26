@@ -1,5 +1,5 @@
 <template>
-  <div class="container w-12 align-items-center justify-content-center flex">
+  <div class="w-12 align-items-center justify-content-center flex">
     <div class=" w-8 justify-content-center align-items-center">
       <div class="flex justify-content-between align-items-center my-3">
         <h2>Lessons in This Class</h2>

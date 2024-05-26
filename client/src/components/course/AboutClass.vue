@@ -1,8 +1,8 @@
 <template>
   <div class="w-12 flex">
     <div class="description w-12 flex flex-column justify-content-center align-items-center">
-      <div class="w-8 flex flex-column surface-card border-round-md">
-        <h2 class="mb-5">About This Course</h2>
+      <div class="w-8 flex flex-column surface-card border-round-md py-2 px-4">
+        <h2 class="mb-2">About This Course</h2>
         <p class="mt-2">
           {{ courseDetails.course_description }}
         </p>

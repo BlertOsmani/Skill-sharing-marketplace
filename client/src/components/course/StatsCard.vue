@@ -1,5 +1,5 @@
 <template>
-  <div class="w-12 container grid p-4 align-items-center justify-content-center " style="background-color: black;">
+  <div class="w-12 grid align-items-center justify-content-center">
     <div class="card col-12 md:col-4 w-1">
       <div class="surface-card p-4 border-round-md shadow-2 flex flex-column align-items-center">
         <i class="pi pi-chart-bar text-5xl mb-2"></i>

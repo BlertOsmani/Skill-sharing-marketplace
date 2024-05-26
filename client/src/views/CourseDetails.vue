@@ -6,9 +6,7 @@
         <Divider class="w-8"/>
       </div>
       <LessonList />
-      
       <AboutClass />
-      
       <Review />
     </div>
   </template>
