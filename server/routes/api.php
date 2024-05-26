@@ -22,3 +22,5 @@ Route::get('/user/toptutors', [UserController::class, 'getTopTutors']);
 Route::get('/search',[SearchController::class, 'search']);
 
 Route::get('/course/featured', [CourseController::class, 'getFeaturedCourses']);
+
+Route::get('/course/details', [CourseController::class, 'courseDetails']);
