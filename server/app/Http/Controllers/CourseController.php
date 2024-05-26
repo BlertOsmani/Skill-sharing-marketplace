@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class CourseController extends Controller
 {
@@ -41,5 +43,47 @@ class CourseController extends Controller
 
     public function getFeaturedCourses(Request $request){
         
+    }
+
+    public function createCourse(Request $request)
+    {
+        
+
+        // Validate the request
+        $validatedData = $request->validate([
+            'user_id' => 'required|numeric',
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'price' => 'numeric',
+            'category_id' => 'required|numeric',
+            'level_id' => 'required|numeric',
+            'tags' => 'string',
+            'video' => 'required',
+            'thumbnail' => 'required',
+        ]);
+
+        // Store the uploaded files
+         $coverImagePath = $request->file('thumbnail')->store('thumbnails', 'public');
+         $salesVideoPath = $request->file('video')->store('videos', 'public');
+
+        $coverImageUrl = url('storage/' . $coverImagePath);
+        $salesVideoUrl = url('storage/' . $salesVideoPath);
+
+
+        // Create and save the course
+        $course = new Course();
+        $course->user_id = $validatedData['user_id'];
+        $course->title = $validatedData['title'];
+        $course->description = $validatedData['description'];
+        $course->price = $validatedData['price'];
+        $course->category_id = $validatedData['category_id'];
+        $course->level_id = $validatedData['level_id'];
+        $course->tags = $validatedData['tags'];
+        $course->thumbnail = asset($coverImageUrl);
+        $course->video = asset($salesVideoUrl);
+        $course->save();
+
+
+        return response()->json($course, 201);
     }
 }
