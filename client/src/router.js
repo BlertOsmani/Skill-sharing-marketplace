@@ -1,4 +1,11 @@
-// src/router.js
+
+
+const routes = [
+  { path: "/register", component: Register },
+  { path: "/", component: Discover },
+  { path: "/search", component: Search },
+  { path: "/course/create", component: CreateCourse },
+  
 import { createRouter, createWebHistory } from 'vue-router';
 import Register from './views/Register.vue';
 import Discover from './views/Discover.vue';
@@ -7,6 +14,7 @@ import ResetPassword from './views/ResetPassword.vue';
 import Search from './views/Search.vue';
 import Albums from './views/Albums.vue';
 import AlbumCourses from './views/AlbumCourse.vue';
+  import CreateCourse from "./views/CreateCourse.vue";
 
 const routes = [
   { path: '/register', component: Register },
@@ -16,6 +24,7 @@ const routes = [
   {path: '/saved/album', component: AlbumCourses},
   { path : '/forgotpassword', component: ForgotPassword},
   { path : '/resetpassword', component: ResetPassword},
+    { path: "/course/create", component: CreateCourse },
 ];
 
 const router = createRouter({

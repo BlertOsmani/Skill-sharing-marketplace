@@ -1,9 +1,12 @@
-import { createApp } from 'vue';
-import './style.css';
-import PrimeVue from 'primevue/config';
-import App from './App.vue';
-import router from './router';
-import ToastService from 'primevue/toastservice';
+
+import { createApp } from "vue";
+import "./style.css";
+import PrimeVue from "primevue/config";
+import App from "./App.vue";
+import router from "./router";
+import ToastService from "primevue/toastservice";
+import ConfirmationService from "primevue/confirmationservice";
+
 
 // Import PrimeVue and PrimeFlex CSS files
 import 'primevue/resources/themes/aura-dark-green/theme.css'; // Choose your theme
@@ -20,4 +23,5 @@ const app = createApp(App);
 app.use(PrimeVue);
 app.use(router);
 app.use(ToastService);
-app.mount('#app');
+app.use(ConfirmationService);
+app.mount("#app");
