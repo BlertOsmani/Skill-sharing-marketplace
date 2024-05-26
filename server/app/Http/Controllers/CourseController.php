@@ -40,9 +40,35 @@ class CourseController extends Controller
             return response()->json(['error' => $e->getMessage()]);
         }
     }
-
     public function getFeaturedCourses(Request $request){
-        
+        $limit = $request->input('limit');
+        try{
+            $featured_courses = Course::withCount('enrollments')
+                        ->withAvg('reviews', 'rating')
+                        ->orderByDesc('enrollments_count')
+                        ->orderByDesc('reviews_avg_rating')
+                        ->take($limit)
+                        ->get()
+                        ->map(function($course) {
+                            return [
+                                'course_id' => $course->id,
+                                'course_title' => $course->title,
+                                'course_tags' => $course->tags,
+                                'course_thumbnail' => $course->thumbnail,
+                                'author' => $course->user->first_name . ' ' . $course->user->last_name,
+                                'category_name' => $course->category->name,
+                                'course_price' => $course->price,
+                                'number_of_lessons' => $course->lessons->count(),
+                                'number_of_enrollments' => $course->enrollments->count(),
+                            ];
+                        });
+            if($featured_courses->isEmpty()){
+                return response()->json(['message' => 'No course found']);
+            }
+            return response()->json($featured_courses);
+        }catch(\Exception $e){
+            return response()->json(['error' => $e->getMessage()]);
+        }
     }
 
     public function createCourse(Request $request)
