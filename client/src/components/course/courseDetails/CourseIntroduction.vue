@@ -3,8 +3,8 @@
     <div class="w-12 flex flex-row justify-content-between">
       <div class="flex flex-row w-10 gap-3">
       <div class="w-5">
-        <video controls class="w-full border-round-md" v-if="course_video">
-          <source :src="course_video" type="video/mp4" />
+        <video controls class="w-full border-round-md" v-if="courseDetails.course_video">
+          <source :src="courseDetails.course_video" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       </div>
@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import video from '../../assets/video/video.mp4';
 import Avatar from 'primevue/avatar';
 import Button from 'primevue/button';
 import axios from 'axios';
@@ -39,8 +38,7 @@ export default {
   data() {
     return {
       courseDetails: {},
-      authorAvatar: 'https://www.gravatar.com/avatar/placeholder?d=mp',
-      course_video : video,
+      authorAvatar: 'https://www.gravatar.com/avatar/placeholder?d=mp'
     };
   },
   created() {
@@ -58,10 +56,21 @@ export default {
         console.error('Error fetching course details:', error);
       }
     },
-    async enroll(){
-      this.$router.push('/course');
-    }
-  }
+    async enroll() {
+      const user_id = 1;  // Assuming you have the user ID in your Vuex store
+      const course_id = this.$route.query.course_id;
+      
+      try {
+        const response = await axios.post(`http://127.0.0.1:8000/api/course/${course_id}/enroll`, {
+          user_id,
+        });
+        console.log('Enrollment successful:', response.data);
+        this.$router.push({ path: '/course/enroll', query: { courseId: course_id } });
+      } catch (error) {
+        console.error('Error enrolling:', error);
+      }
+    },
+  },
 };
 </script>
 
