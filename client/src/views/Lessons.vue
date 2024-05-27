@@ -14,5 +14,10 @@
       Lessons,
       Review,
     },
+    mounted(){
+      if(!localStorage.getItem('authToken')){
+        this.$router.push('/');
+      }
+    }
 }
     </script> 

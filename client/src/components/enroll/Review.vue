@@ -42,7 +42,6 @@
             </div>
         </div>
     </div>
-    
 </template>
 
 <script>
@@ -50,6 +49,7 @@ import axios from 'axios';
 import Fieldset from 'primevue/fieldset';
 import Avatar from 'primevue/avatar';
 import Button from 'primevue/button';
+import AuthServices from '@/services/AuthServices';
 import Rating from 'primevue/rating';
 import Textarea from 'primevue/textarea';
 
@@ -70,45 +70,56 @@ export default {
             form: {
                 comment: '',
                 rating: null,
-                user_id: 1, // Replace with dynamic user ID
-                course_id: 3 // Replace with dynamic course ID
+                user_id: null,
+                course_id: this.$route.query.courseId
             }
         };
     },
-    mounted() {
+    async mounted() {
+        await this.fetchUserProfile();
         this.fetchCourseDetails();
     },
     methods: {
-    async fetchCourseDetails() {
-        const courseId = this.$route.query.courseId;
-        try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/reviews/${courseId}`);
-            const data = response.data;
-            this.reviews = data.reviews;
-            // Assuming the authorName is derived from the author's user_id.
-            this.authorName = data.author;
-        } catch (error) {
-            console.error('Error fetching course details:', error);
-        }
-    },
-    async submitForm() {
-        try {
-            const response = await axios.post('http://localhost:8000/api/reviews', this.form);
-            console.log('Form submitted with:', response.data);
-            // Add the new review to the beginning of the reviews array
-            const newReview = {
-                review_text: this.form.comment,
-                rating: this.form.rating
-            };
-            this.reviews.unshift(newReview);
-            // Clear the form
-            this.form.comment = '';
-            this.form.rating = null;
-        } catch (error) {
-            console.error('Error submitting form:', error);
+        async fetchUserProfile() {
+            try {
+                const user = await AuthServices.getProfile();
+                if (user && user.data) {
+                    this.form.user_id = user.data.id;
+                    this.authorName = user.data.username || 'Anonymous';
+                    this.authorAvatar = user.data.profile_picture|| 'https://www.gravatar.com/avatar/placeholder?d=mp';
+                } else {
+                    console.error('User data is not available');
+                }
+            } catch (error) {
+                console.error('Error fetching user profile:', error);
+            }
+        },
+        async fetchCourseDetails() {
+            const courseId = this.$route.query.courseId || this.form.course_id;
+            try {
+                const response = await axios.get(`http://127.0.0.1:8000/api/reviews/${courseId}`);
+                const data = response.data;
+                this.reviews = data.reviews;
+            } catch (error) {
+                console.error('Error fetching course details:', error);
+            }
+        },
+        async submitForm() {
+            try {
+                const response = await axios.post('http://localhost:8000/api/reviews', this.form);
+                console.log('Form submitted with:', response.data);
+                const newReview = {
+                    review_text: this.form.comment,
+                    rating: this.form.rating
+                };
+                this.reviews.unshift(newReview);
+                this.form.comment = '';
+                this.form.rating = null;
+            } catch (error) {
+                console.error('Error submitting form:', error);
+            }
         }
     }
-}
 };
 </script>
 

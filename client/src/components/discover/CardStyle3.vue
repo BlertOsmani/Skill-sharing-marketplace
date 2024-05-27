@@ -23,7 +23,9 @@
                             <p class="text-xs text-400 font-semibold">{{duration}}</p>
                         </div>
                         <div v-if="isAuthenticated" class="flex justify-content-end align-items-center">
-                            <Button icon="pi pi-bookmark text-lg" severity="secondary" @click="dialogVisible = true" text></Button>
+                            <div @click.stop.prevent="saveCourse">
+                                <Button icon="pi pi-bookmark text-lg" severity="secondary" text></Button>
+                            </div>
                             <SaveCourseDialog
                                 :visible="dialogVisible"
                                 @update:visible="dialogVisible = $event"
@@ -61,6 +63,7 @@ export default {
             courseTitle: this.title,
             createAlbum: false,
             id: this.id,
+            isIconVisible:false,
         };
     },
     props:{
@@ -79,18 +82,16 @@ export default {
             return this.info && this.duration;
         },
     },
-    data(){
-        return{
-            isIconVisible: false,
-        }
-    },
     methods:{
       showIcon(){
         this.isIconVisible = true;
       },
       hideIcon(){
         this.isIconVisible = false;
-      }
+      },
+      saveCourse() {
+            this.dialogVisible = true;
+        }
     },
     setup() {
         const isAuthenticated = ref(localStorage.getItem('authToken') !== null);

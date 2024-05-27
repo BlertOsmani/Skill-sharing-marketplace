@@ -172,7 +172,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import MyCourse from "../components/course/myCourse/MyCourse.vue";
+import MyCourse from "../components/course/myCourse/myCourse.vue";
 import AuthServices from "@/services/AuthServices";
 import ConfirmDialog from "primevue/confirmdialog";
 import Toast from "primevue/toast";
@@ -389,6 +389,9 @@ const updateCourse = async () => {
 };
 
 onMounted(() => {
+  if(!localStorage.getItem('authToken')){
+    router.push('/');
+  }
   getCourses();
   fetchCategories();
   fetchLevels();
