@@ -5,7 +5,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\SearchController;
-use App\Http\Controllers\LessonController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\FavoritesController;
@@ -13,6 +12,8 @@ use App\Models\Favorite;
 use App\Models\FavoriteAlbum;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\LessonController;
+use App\Http\Controllers\ReviewController;
 
 Route::middleware('auth:api')->get('/user', [UserController::class, 'user']);
 Route::group(['middleware' => 'api', 'prefix' => 'auth'], function($router){
@@ -39,3 +40,7 @@ Route::delete('/lesson/delete/{id}', [LessonController::class, 'deleteLesson']);
 Route::post('/forgot', [ForgotPasswordController::class, 'sendResetLinkEmail']);
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::get('/category', [CategoryController::class, 'getCoursesByCategory']);
+Route::get('courses/{courseId}/lessons', [LessonController::class, 'getLessonsByCourse']);
+Route::post('/reviews', [ReviewController::class, 'createReview']);
+Route::get('/reviews/{courseId}', [ReviewController::class, 'courseReview']);

@@ -32,6 +32,7 @@
                                 :createAlbum="createAlbum"
                                 :id="id"
                             />  
+                            />  
                         </div>
                     </div>
                 </div>

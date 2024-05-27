@@ -11,4 +11,5 @@ class Category extends Model
     public function courses(){
         return $this->hasMany(Course::class);
     }
+    protected $table = "category";
 }
