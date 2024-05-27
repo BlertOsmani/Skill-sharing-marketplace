@@ -10,7 +10,8 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use App\Http\Controllers\JWTAuth;
+use Tymon\JWTAuth\Facades\JWTAuth;
+
 use Validator;
 use Auth;
 
