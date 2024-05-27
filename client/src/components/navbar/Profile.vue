@@ -68,7 +68,7 @@ export default {
                             title: 'Learning',
                             items: [
                                 { to: '/mycourses', label: 'My courses', icon: 'pi pi-graduation-cap', badge: '' },
-                                { to: '/favorites', label: 'Saved', icon: 'pi pi-bookmark', badge: '' },
+                                { to: '/saved', label: 'Saved', icon: 'pi pi-bookmark', badge: '' },
                             ],
                         },
                         {

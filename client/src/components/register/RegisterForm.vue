@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from "vue";
 import { useToast } from "primevue/usetoast";
+import { useRouter } from 'vue-router'; // Import useRouter
+const router = useRouter();
 const firstName = ref();
 const lastName = ref();
 const email = ref();
@@ -22,48 +24,49 @@ var serverSideFirstNameError = ref("");
 var serverSideLastNameError = ref("");
 var serverSideUsernameError = ref("");
 
-async function handleSubmit() {
-  if (validateForm()) {
-    try {
-      const response = await fetch(
-        "http://127.0.0.1:8000/api/auth/user/create",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-          mode: "cors",
-          body: JSON.stringify({
-            firstName: firstName.value,
-            lastName: lastName.value,
-            email: email.value,
-            username: username.value,
-            password: password.value,
-            confirmPassword: confirmPassword.value,
-          }),
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Something went wrong. Please try again!");
-      } else {
-        const data = await response.json();
-        console.log(data);
-        if (data.errors) {
-          updateErrors(data.errors);
-        } else {
-          toast.add({
-            severity: "error",
-            summary: "Error",
-            detail: data.message,
-            life: 4000,
-          });
-          resetErrors();
+async function handleSubmit(){  
+    if(validateForm()){
+        try {
+            const response = await fetch("http://127.0.0.1:8000/api/user/create", {
+                method: 'POST',
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                mode: 'cors',
+                body: JSON.stringify({
+                    firstName: firstName.value,
+                    lastName: lastName.value,
+                    email: email.value,
+                    username: username.value,
+                    password: password.value,
+                    confirmPassword: confirmPassword.value
+                })
+            });
+            if(!response.ok){   
+                throw new Error('Something went wrong. Please try again!');
+            }
+            else{
+                const data = await response.json();
+                console.log(data);
+                if(data.errors){    
+                    updateErrors(data.errors);
+                }
+                else if(data.message){
+                    toast.add({ severity: 'error', summary: 'Error', detail: data.message , life: 4000 }); 
+                    resetErrors();
+                }
+                else{
+                    router.push('/login');
+                    resetErrors();
+                }
+            }
+
+
+        } catch (error) {
+            console.log("There was a problem with the fetch operation: ", error);
         }
       }
-    } catch (error) {
-      console.log("There was a problem with the fetch operation: ", error);
-    }
   }
 }
 
