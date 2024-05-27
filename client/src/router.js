@@ -1,4 +1,6 @@
+
 import { createRouter, createWebHistory } from "vue-router";
+import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import Discover from "./views/Discover.vue";
 import ForgotPassword from "./views/ForgotPassword.vue";
@@ -11,6 +13,7 @@ import CreateCourse from "./views/CreateCourse.vue";
 const routes = [
   { path: "/register", component: Register },
   { path: "/", component: Discover },
+  { path: "/login", component: Login },
   { path: "/search", component: Search },
   { path: "/saved", component: Albums },
   { path: "/saved/album", component: AlbumCourses },
