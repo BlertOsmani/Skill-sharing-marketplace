@@ -1,5 +1,5 @@
 <template>
-    <div class="mb-5">
+    <div v-if="cards.length > 0" class="mb-5">
       <div class="flex flex-row align-items-center justify-content-between">
         <h2>Enrolled in</h2>
         <Button severity="contrast" label="View all" outlined></Button>
@@ -24,6 +24,7 @@
   </template>
   
 <script>
+import AuthServices from '@/services/AuthServices';
   import uiUxCourse from '../../assets/images/ui-ux-course.avif';
   import uiUxCourse2 from '../../assets/images/ui-ux-course-2.jpg';
   import uiUxCourse3 from '../../assets/images/ui-ux-course-3.jpeg';
@@ -44,10 +45,12 @@
       };
     },
     methods: {
-      async getEnrolledCourses() {
+      async getEnrolledCourses() {        
+        const user = await AuthServices.getProfile();
+        const userId = user.data.id;
         const limit = 4;
         try {
-          const response = await fetch(`http://127.0.0.1:8000/api/course/enrolled?limit=${limit}`, {
+          const response = await fetch(`http://127.0.0.1:8000/api/course/enrolled?limit=${limit}&userId=${userId}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -59,6 +62,10 @@
             throw new Error('Something went wrong fetching the courses you are enrolled in. Please refresh the page!');
           }
           const data = await response.json();
+          if(data.message){
+            return;
+          }
+          else{
           // Assuming the response data structure matches the card data structure
           this.cards = data.map(course => ({
             id: course.course_id,
@@ -71,13 +78,14 @@
             category: course.category_name,
             duration: "4h 8min",
           }));
+        }
         } catch (error) {
           console.error('Error fetching learning data:', error);
         }
     },
     },
-    mounted(){
-      this.getEnrolledCourses();
+    async mounted(){
+      await this.getEnrolledCourses();
     }
   };
   </script>
