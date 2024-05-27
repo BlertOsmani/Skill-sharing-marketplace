@@ -24,7 +24,9 @@
             <span class="text-xs text-400">{{duration}}</span>
           </div>
           <div class="flex flex-row align-items-center">
-            <Button icon="pi pi-bookmark text-lg" severity="secondary" @click="dialogVisible = true" text></Button>
+            <div @click.stop.prevent="saveCourse">
+                <Button icon="pi pi-bookmark text-lg" severity="secondary" text></Button>
+            </div>
             <SaveCourseDialog
                 :visible="dialogVisible"
                 @update:visible="dialogVisible = $event"
@@ -103,6 +105,9 @@ export default {
       },
       hideIcon(){
         this.isIconVisible = false;
+      },
+      saveCourse() {
+            this.dialogVisible = true;
       }
     }
 }

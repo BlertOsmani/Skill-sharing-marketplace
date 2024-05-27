@@ -27,7 +27,6 @@ Route::get('/course/enrolled', [CourseController::class, 'getEnrolledCourses']);
 Route::get('/user/toptutors', [UserController::class, 'getTopTutors']);
 Route::get('/search',[SearchController::class, 'search']);
 Route::get('/course/featured', [CourseController::class, 'getFeaturedCourses']);
-
 Route::get('/course/details', [CourseController::class, 'courseDetails']);
 Route::post('/album/create', [FavoritesController::class, 'createAlbum']);
 Route::get('/album/get', [FavoritesController::class, 'getAlbums']);

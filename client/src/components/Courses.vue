@@ -21,15 +21,17 @@
                             <Dot v-if="showDot"/>
                             <p class="text-xs text-400 font-semibold">{{duration}}</p>
                         </div>
-                        <div class="flex justify-content-end align-items-center">
-                            <Button icon="pi pi-bookmark text-lg" severity="secondary" @click="dialogVisible = true" text></Button>
+                        <div v-if="isAuthenticated" class="flex justify-content-end align-items-center">
+                            <div @click.stop.prevent="saveCourse">
+                                <Button icon="pi pi-bookmark text-lg" severity="secondary" text></Button>
+                            </div>
                             <SaveCourseDialog
                                 :visible="dialogVisible"
                                 @update:visible="dialogVisible = $event"
                                 :title="courseTitle"
                                 :createAlbum="createAlbum"
                                 :id="id"
-                            />
+                            />   
                         </div>
                     </div>
                 </div>
@@ -37,6 +39,8 @@
         </Link>
 </template>
 <script>
+import { ref, onMounted } from 'vue';
+import AuthServices from "@/services/AuthServices";
 import Dot from './Dot.vue';
 import Button from 'primevue/button';
 import Tag from 'primevue/tag';
@@ -81,7 +85,27 @@ export default {
       },
       hideIcon(){
         this.isIconVisible = false;
-      }
+      },
+      saveCourse() {
+            this.dialogVisible = true;
+        }
+    },
+    setup() {
+        const isAuthenticated = ref(localStorage.getItem('authToken') !== null);
+
+        onMounted(async () => {
+        const user = await AuthServices.getProfile();
+        if (user) {
+            isAuthenticated.value = true;
+        } else {
+            isAuthenticated.value = false;
+            localStorage.removeItem('authToken');
+        }
+        });
+
+        return {
+        isAuthenticated,
+        };
     }
 }
 </script>

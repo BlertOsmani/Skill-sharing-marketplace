@@ -14,6 +14,7 @@
 </template>
 <script>
 import Albums from '../components/saved/Albums.vue';
+import AuthServices from '@/services/AuthServices';
 export default {
     components:{
         Albums,
@@ -25,8 +26,13 @@ export default {
     },
     methods:{
         async getAlbums(){
+            if(!localStorage.getItem('authToken')){
+                this.$router.push('/');
+            }
+            const user = await AuthServices.getProfile();
+            const userId = user.data.id;
             try{
-                const response = await fetch(`http://127.0.0.1:8000/api/album/get`, {
+                const response = await fetch(`http://127.0.0.1:8000/api/album/get?userId=${userId}`, {
                     method: 'GET',
                     headers: {
                     'Content-Type': 'application/json',
@@ -55,6 +61,6 @@ export default {
     }
 }
 </script>
-<style lang="">
+<style lang="css">
     
 </style>
