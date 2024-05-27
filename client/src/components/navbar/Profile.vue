@@ -67,7 +67,7 @@ onUnmounted(() => {
 const logout = async () => {
     await AuthServices.logout();
     toggleMenu();
-    window.location.reload();   // Add any additional logout handling logic here
+    window.location.href = '/';  // Add any additional logout handling logic here
 };
 
 const profileDropdownItems = ref([

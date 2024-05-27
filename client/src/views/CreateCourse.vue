@@ -40,6 +40,11 @@ export default {
       console.log("Course created with ID:", this.courseId);
     },
   },
+  mounted(){
+    if(!localStorage.getItem('authToken')){
+        this.$router.push('/');
+    }
+  }
 };
 </script>
 

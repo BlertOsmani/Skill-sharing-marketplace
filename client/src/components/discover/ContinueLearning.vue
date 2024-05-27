@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-5">
+  <div v-if="isAuthenticated" class="mb-5">
     <h2>Continue learning</h2>
     <div class="flex justify-content-start flex-row align-items-center gap-3 overflow-auto">
       <CardStyle1
@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import { ref, onMounted } from 'vue';
+import AuthServices from "@/services/AuthServices";
 import uiUxCourse from '../../assets/images/ui-ux-course.avif';
 import uiUxCourse2 from '../../assets/images/ui-ux-course-2.jpg';
 import uiUxCourse3 from '../../assets/images/ui-ux-course-3.jpeg';
@@ -46,5 +48,22 @@ export default {
       return this.progressValues[index];
     },
   },
+  setup() {
+        const isAuthenticated = ref(localStorage.getItem('authToken') !== null);
+
+        onMounted(async () => {
+        const user = await AuthServices.getProfile();
+        if (user) {
+            isAuthenticated.value = true;
+        } else {
+            isAuthenticated.value = false;
+            localStorage.removeItem('authToken');
+        }
+        });
+
+        return {
+            isAuthenticated,
+        };
+    }
 };
 </script>
