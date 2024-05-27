@@ -10,6 +10,10 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use App\Http\Controllers\JWTAuth;
+use Validator;
+use Auth;
+
 
 class UserController extends Controller
 {
@@ -49,7 +53,59 @@ class UserController extends Controller
             return response()->json(['errors' => $e->errors()]);
         }
     }
+    public function login(Request $request){
+        try {
+            $validator = Validator::make($request->all(), [
+                'username' => 'required',
+                'password' => 'required|string'
+            ]);
 
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 422);
+            }
+
+            $user = User::where('username', $request->username)->first();
+
+            if (!$user) {
+                return response()->json(['error' => 'User not found with username: ' . $request->username], 404);
+            }
+            $passwordWithSalt = $request->password.$user->password_salt;
+
+
+            if (!Hash::check($passwordWithSalt, $user->password)) {
+                return response()->json(['error' => 'Incorrect password for user: ' . $user->username], 401);
+            }
+
+            if (!$token = JWTAuth::attempt(['username' => $request->username, 'password' => $passwordWithSalt])) {
+                return response()->json(['error' => 'Authentication failed for user: ' . $request->username], 401);
+            }
+
+            return $this->createNewToken($token);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    
+    public function createNewToken($token){
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => JWTAuth::factory()->getTTL()*60 * 1440 * 10,
+            'user' => JWTAuth::user()
+        ]);
+
+    }
+    public function user(){
+        return response()->json(JWTAuth::user());
+    }
+    public function logout(){
+        try{
+            JWTAuth::invalidate(JWTAuth::getToken());
+            return response()->json(['message'=>'User succesfully logged out']);
+        }catch(Exception $e){
+            return response()->json(['error'=>'Failed to log out, please try again']);
+        }
+    }
     public function getTopTutors(){
         try{
             $pastWeek = Carbon::now()->subWeek();
