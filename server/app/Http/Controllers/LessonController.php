@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -6,8 +7,14 @@ use App\Models\Lesson;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
+
 class LessonController extends Controller
 {
+    public function getLessonsByCourse($courseId)
+    {
+        $lessons = Lesson::where('course_id', $courseId)->get();
+        return response()->json($lessons);
+    }
     public function createLesson(Request $request)
     {
         try {
