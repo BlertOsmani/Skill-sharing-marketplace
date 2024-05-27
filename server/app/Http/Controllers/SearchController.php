@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class SearchController extends Controller
 {
-    public function search(Request $request){
-        $query = $request->input('query');
+    public function search(Request $request, $query){
         $searchUsers = $this->searchUsers($query);
         $searchCourses = $this->searchCourses($query);
 

@@ -19,10 +19,10 @@ import Categories from "./views/Categories.vue";
 
 
 const routes = [
-  { path: '/register', component: Register },
+  { path: '/signup', component: Register },
   {path : '/', component: Discover},
   {path: '/search', component: Search},
-  { path: "/login", component: Login },
+  { path: "/signin", component: Login },
   {path: '/course/details', component: CourseDetails},
   {path: '/saved', component: Albums},
   {path: '/saved/album', component: AlbumCourses},

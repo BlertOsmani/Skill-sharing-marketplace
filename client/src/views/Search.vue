@@ -70,7 +70,7 @@ export default {
     methods:{
         async getSearchedCourses(){
         try{
-            var response = await fetch(`http://127.0.0.1:8000/api/search?query=${this.searchQuery}`, {
+            var response = await fetch(`http://127.0.0.1:8000/api/search/${this.searchQuery}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -114,7 +114,7 @@ export default {
       },
       async getSearchedTutors(){
         try{
-            var response = await fetch(`http://127.0.0.1:8000/api/search?query=${this.searchQuery}`, {
+            var response = await fetch(`http://127.0.0.1:8000/api/search/${this.searchQuery}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

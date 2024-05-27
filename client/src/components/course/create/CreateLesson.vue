@@ -231,7 +231,7 @@ const confirmDelete = async () => {
 const getLesson = async (id) => {
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/api/course/lesson/get?course_id=${id}`,
+      `http://127.0.0.1:8000/api/course/${id}/lesson`,
       {
         method: "GET",
         headers: {

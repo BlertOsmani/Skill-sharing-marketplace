@@ -44,8 +44,10 @@ class ReviewController extends Controller
                 'author' => $course->user->first_name . ' ' . $course->user->last_name,
                 'reviews' => $course->reviews->map(function($review) {
                     return [
+                        'user' => $review->user->first_name . ' ' . $review->user->last_name,
                         'review_text' => $review->review_text,
                         'rating' => $review->rating,
+                        'user_id' => $review->user->id,
                     ];
                 }),
             ];

@@ -47,7 +47,7 @@ export default {
     }
 
       try {
-        const response = await axios.post('http://localhost:8000/api/forgot', { email: this.email });
+        const response = await axios.post('http://localhost:8000/api/forgot/password', { email: this.email });
         if(response.data.message){
           this.emailSent = true;
         }

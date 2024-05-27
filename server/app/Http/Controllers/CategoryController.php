@@ -10,12 +10,11 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function getCoursesByCategory(Request $request)
+    public function getCoursesByCategory(Request $request, $categoryId)
     {
-        $category_id = $request->input('category_id');
         $courses = Course::with(['category', 'user', 'lessons', 'enrollments'])
-            ->whereHas('category', function($q) use ($category_id) {
-                $q->where('id', $category_id);
+            ->whereHas('category', function($q) use ($categoryId) {
+                $q->where('id', $categoryId);
             })
             ->get()
             ->map(function($course) {

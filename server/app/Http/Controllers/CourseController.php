@@ -42,8 +42,7 @@ class CourseController extends Controller
             return response()->json(['error' => $e->getMessage()]);
         }
     }
-    public function getFeaturedCourses(Request $request){
-        $limit = $request->input('limit');
+    public function getFeaturedCourses(Request $request, $limit){
         try{
             $featured_courses = Course::withCount('enrollments')
                         ->withAvg('reviews', 'rating')
@@ -72,9 +71,8 @@ class CourseController extends Controller
             return response()->json(['error' => $e->getMessage()]);
         }
     }
-    public function courseDetails(Request $request)
+    public function courseDetails(Request $request, $courseId)
     {
-        $id = $request->input('course_id');
     
         try {
             // Load the course along with necessary relationships
@@ -85,7 +83,7 @@ class CourseController extends Controller
                 'lessons',
                 'reviews.user', // To include the user who wrote the review
                 'enrollments'
-            ])->findOrFail($id);
+            ])->findOrFail($courseId);
     
             // Calculate the average rating
             $averageRating = number_format($course->reviews->avg('rating'), 1);

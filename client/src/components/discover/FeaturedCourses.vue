@@ -47,7 +47,7 @@ export default {
       async getFeaturedCourses(){
           const limit = 4;
           try{
-              var response = await fetch(`http://127.0.0.1:8000/api/course/featured?limit=${limit}`, {
+              var response = await fetch(`http://127.0.0.1:8000/api/course/featured/${limit}`, {
                   method: 'GET',
                   headers: {
                       'Content-Type': 'application/json',

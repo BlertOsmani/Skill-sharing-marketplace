@@ -34,7 +34,7 @@ export default {
   methods: {
     async getCoursesByCategory() {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/category?category_id=${this.categoryId}`, {
+        const response = await fetch(`http://127.0.0.1:8000/api/category/${this.categoryId}/courses`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

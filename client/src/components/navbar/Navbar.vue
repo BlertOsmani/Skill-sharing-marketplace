@@ -17,7 +17,7 @@
         <div
             class="links flex flex-row align-items-center justify-content-end w-relative"
         >
-            <router-link to="/login" class="links flex flex-row align-items-center justify-content-end w-12 relative">
+            <router-link to="/signin" class="links flex flex-row align-items-center justify-content-end w-12 relative">
             <Button
                 severity="contrast"
                 text
@@ -30,7 +30,7 @@
              class="links flex flex-row align-items-center justify-content-end w-4 relative"
         >
 
-        <router-link to="/register" class="links flex flex-row align-items-center justify-content-end w-12 relative">
+        <router-link to="/signup" class="links flex flex-row align-items-center justify-content-end w-12 relative">
             <Button
                 severity="primary"
                 label="Sign up"

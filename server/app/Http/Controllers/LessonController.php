@@ -51,11 +51,10 @@ class LessonController extends Controller
         }
     }
 
-    public function getLessons(Request $request)
+    public function getLessons(Request $request, $courseId)
     {
-        $course_id = $request->input('course_id');
         // Retrieve lessons based on course_id
-        $lessons = Lesson::where('course_id', $course_id)->get();
+        $lessons = Lesson::where('course_id', $courseId)->get();
 
         // Return the lessons as a JSON response
         return response()->json($lessons);

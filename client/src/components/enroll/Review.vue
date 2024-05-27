@@ -24,7 +24,7 @@
                     <template #legend>
                         <div class="flex align-items-center pl-2">
                             <Avatar :image="authorAvatar" shape="circle" />
-                            <span class="font-bold">{{ authorName }}</span>
+                            <span class="font-bold">{{ review.user }}</span>
                         </div>
                     </template>
                     <div class="flex flex-row justify-content-between">
@@ -66,7 +66,6 @@ export default {
         return {
             reviews: [],
             authorAvatar: 'https://www.gravatar.com/avatar/placeholder?d=mp',
-            authorName: '',
             form: {
                 comment: '',
                 rating: null,
@@ -85,8 +84,6 @@ export default {
                 const user = await AuthServices.getProfile();
                 if (user && user.data) {
                     this.form.user_id = user.data.id;
-                    this.authorName = user.data.username || 'Anonymous';
-                    this.authorAvatar = user.data.profile_picture|| 'https://www.gravatar.com/avatar/placeholder?d=mp';
                 } else {
                     console.error('User data is not available');
                 }
@@ -97,7 +94,7 @@ export default {
         async fetchCourseDetails() {
             const courseId = this.$route.query.courseId || this.form.course_id;
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/reviews/${courseId}`);
+                const response = await axios.get(`http://127.0.0.1:8000/api/course/${courseId}/reviews`);
                 const data = response.data;
                 this.reviews = data.reviews;
             } catch (error) {
@@ -108,13 +105,9 @@ export default {
             try {
                 const response = await axios.post('http://localhost:8000/api/reviews', this.form);
                 console.log('Form submitted with:', response.data);
-                const newReview = {
-                    review_text: this.form.comment,
-                    rating: this.form.rating
-                };
-                this.reviews.unshift(newReview);
                 this.form.comment = '';
                 this.form.rating = null;
+                this.fetchCourseDetails();
             } catch (error) {
                 console.error('Error submitting form:', error);
             }

@@ -9,9 +9,8 @@ use App\Models\Course;
 
 class FavoritesController extends Controller
 {
-    public function getAlbums(Request $request)
+    public function getAlbums(Request $request, $userId)
     {
-        $userId = $request->input('userId');
         // Get albums with their associated courses count
         $albums = FavoriteAlbum::where('user_id', $userId)->withCount('favorites')->get();
 
@@ -56,8 +55,7 @@ class FavoritesController extends Controller
         ]);
     }
 
-    public function getSavedCourses(Request $request){
-        $albumId = $request->input('albumId');
+    public function getSavedCourses(Request $request, $albumId){
         $favoriteCourses = Favorite::where('album_id', $albumId)
             ->with(['course.user', 'course.category', 'course.lessons', 'course.enrollments'])
             ->get()

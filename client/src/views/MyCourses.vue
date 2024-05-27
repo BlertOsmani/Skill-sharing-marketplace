@@ -209,7 +209,7 @@ const getCourses = async () => {
   const user = await AuthServices.getProfile();
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/api/course/get/user/${user.data.id}`,
+      `http://127.0.0.1:8000/api/users/${user.data.id}/courses`,
       {
         method: "GET",
         headers: {

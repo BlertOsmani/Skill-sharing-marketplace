@@ -49,12 +49,11 @@ export default {
     },
     methods: {
         async fetchCourseDetails() {
-            var course_id = this.$route.query.course_id
+            const course_id = this.$route.query.course_id;
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/course/details?course_id=${course_id}`, {
-                    
-                });
-                this.reviews = response.data.reviews;
+                const response = await axios.get(`http://127.0.0.1:8000/api/course/${course_id}/reviews`);
+                const data = response.data;
+                this.reviews = data.reviews;
             } catch (error) {
                 console.error('Error fetching course details:', error);
             }

@@ -36,7 +36,7 @@ const getAlbums = async () => {
     const user = await AuthServices.getProfile();
     const userId = user.data.id;
     try {
-        const response = await fetch(`http://127.0.0.1:8000/api/album/get?userId=${userId}`, {
+        const response = await fetch(`http://127.0.0.1:8000/api/album/get/${userId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ async function saveCourse() {
         return;
     }
     try {
-        const response = await fetch('http://127.0.0.1:8000/api/course/save', {
+        const response = await fetch('http://127.0.0.1:8000/api/course/album/save', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

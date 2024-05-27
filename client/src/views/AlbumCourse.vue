@@ -44,7 +44,7 @@
     methods: {
       async getSavedCourses() {
         try {
-          const response = await fetch(`http://127.0.0.1:8000/api/album/saved/get?albumId=${this.albumId}`, {
+          const response = await fetch(`http://127.0.0.1:8000/api/album/saved/get/${this.albumId}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
