@@ -1,7 +1,9 @@
 <script setup>
 import { ref } from "vue";
 import { useToast } from "primevue/usetoast";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const username = ref("");
 const password = ref("");
 const rememberMe = ref(false);
@@ -34,7 +36,8 @@ async function handleSubmit() {
         throw new Error("Something went wrong. Please try again!");
       } else {
         const data = await response.json();
-        console.log(data);
+        localStorage.setItem('authToken', data.access_token);
+        router.push('/');
         if (data.errors) {
           updateErrors(data.errors);
         } else {

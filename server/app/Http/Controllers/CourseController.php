@@ -12,6 +12,7 @@ class CourseController extends Controller
 {
     public function getEnrolledCourses(Request $request){
         $limit = $request->input('limit');
+        $userId = $request->input('userId');
         try {
             $query = Course::select(
                 'courses.id as course_id',
@@ -25,6 +26,7 @@ class CourseController extends Controller
                 ->join('categories', 'courses.category_id', '=', 'categories.id')
                 ->join('users', 'users.id', '=', 'courses.user_id')
                 ->join('levels', 'courses.level_id', '=', 'levels.id')
+                ->where('users.id', $userId)
                 ->withCount('enrollments');
             if($limit !== null){
                 $query->limit((int)$limit);
@@ -73,8 +75,6 @@ class CourseController extends Controller
 
     public function createCourse(Request $request)
     {
-        
-
         // Validate the request
         $validatedData = $request->validate([
             'user_id' => 'required|numeric',

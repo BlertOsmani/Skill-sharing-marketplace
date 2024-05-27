@@ -1,6 +1,8 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue';
 import { useToast } from 'primevue/usetoast';
+import AuthServices from '@/services/AuthServices';
+import { useRouter } from 'vue-router';
 const toast = useToast();
 
 const props = defineProps({
@@ -17,6 +19,7 @@ const props = defineProps({
         required: true,
     },
 });
+const router = useRouter();
 
 const emit = defineEmits(['update:visible', 'select-album']);
 
@@ -27,8 +30,13 @@ const selectedAlbumId = ref(null);
 const defaultAlbumId = ref(1);
 
 const getAlbums = async () => {
+    if(!AuthServices.getProfile()){
+        router.push('/login');
+    }
+    const user = await AuthServices.getProfile();
+    const userId = user.data.id;
     try {
-        const response = await fetch('http://127.0.0.1:8000/api/album/get', {
+        const response = await fetch(`http://127.0.0.1:8000/api/album/get?userId=${userId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

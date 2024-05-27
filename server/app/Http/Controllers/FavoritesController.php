@@ -11,8 +11,9 @@ class FavoritesController extends Controller
 {
     public function getAlbums(Request $request)
     {
+        $userId = $request->input('userId');
         // Get albums with their associated courses count
-        $albums = FavoriteAlbum::withCount('favorites')->get();
+        $albums = FavoriteAlbum::where('user_id', $userId)->withCount('favorites')->get();
 
         // Transform the response to include only titles and course count
 
@@ -23,7 +24,7 @@ class FavoritesController extends Controller
 
     public function createAlbum(Request $request){
         $title = $request->input('title');
-        $userId = 1;
+        $userId = $request->input('userId');
 
         $album = new FavoriteAlbum();
         $album->title = $title;

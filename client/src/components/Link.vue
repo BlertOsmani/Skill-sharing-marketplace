@@ -1,85 +1,57 @@
-<template>
-    <div v-if="to">
-        <router-link :to="to" exact>
-            <Button 
-                :label="label" 
-                :icon="icon" 
-                text 
-                :severity="severity" 
-                :class="computeClass()" 
-                :badge="badge" 
-                :badgeSeverity="badgeSeverity" 
-                :iconPos="iconPos"
-            >
-                <slot></slot>
-            </Button>
-        </router-link>
-    </div>
-    <div v-else>
-        <Button 
-            :label="label" 
-            :icon="icon" 
-            text 
-            :severity="severity" 
-            :class="computeClass()" 
-            :badge="badge" 
-            :badgeSeverity="badgeSeverity" 
-            :iconPos="iconPos" 
-            @click="handleClick"
-        >
+<template lang="">
+    <router-link :to="to" exact>
+        <Button :label="label" :icon="icon" text :severity="severity" :class="computeClass()" :badge="badge" :badgeSeverity="badgeSeverity" :iconPos="iconPos">
             <slot></slot>
         </Button>
-    </div>
+    </router-link>
 </template>
-
 <script>
 import Button from 'primevue/button';
-
 export default {
     name: 'Link',
-    components: {
+    components:{
         Button
     },
-    props: {
-        to: {
-            type: String,
-            required: false
+    props:{
+        to:{
+            type:String,
+            required: true,
         },
-        label: {
-            type: String,
-            required: false
+        type:{
+            type:String, 
+            required:false,
         },
-        icon: {
+        label:{
             type: String,
-            required: false
+            required: false,
         },
-        class: {
-            type: String,
-            required: false
+        icon:{
+            type:String,
+            required:false,
         },
-        badge: {
-            type: String,
-            required: false
+        class:{
+            type:String,
+            required:false,
         },
-        iconPos: {
-            type: String,
-            required: false
+        badge:{
+            type:String,
+            required:false,
         },
-        badgeSeverity: {
-            type: String,
-            required: false
+        iconPos:{
+            type:String,
+            required:false,
         },
-        severity: {
-            type: String,
-            required: false
+        badgeSeverity:{
+            type:String,
+            required:false,
+        },
+        severity:{
+            type:String,
+            required:false,
         },
         highlight: {
             type: Boolean,
-            default: true
-        },
-        clickHandler: {
-            type: Function,
-            default: null
+            default: true,
         }
     },
     methods: {
@@ -88,22 +60,18 @@ export default {
                 this.class,
                 this.highlight && this.$route.path === this.to ? 'active-link' : ''
             ];
-        },
-        handleClick() {
-            if (typeof this.clickHandler === 'function') {
-                this.clickHandler();
-            }
         }
     }
-};
+}
 </script>
-
 <style lang="css">
 .active-link {
-    background-color: var(--surface-hover);
-    color: var(--primary-color);
+    /* Add your styles to highlight the active link */
+    /* For example: */
+   background-color: var(--surface-hover);
+   color: var(--primary-color);
 }
-a {
-    text-decoration: none;
+a{
+    text-decoration:none;
 }
 </style>

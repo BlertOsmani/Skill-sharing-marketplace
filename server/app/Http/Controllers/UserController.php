@@ -9,11 +9,10 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
-use App\Http\Controllers\JWTAuth;
-use Validator;
 use Auth;
-
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserController extends Controller
 {
@@ -86,18 +85,37 @@ class UserController extends Controller
         }
     }
     
-    public function createNewToken($token){
+    public function createNewToken($token) {
+        $user = JWTAuth::user();
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => JWTAuth::factory()->getTTL()*60 * 1440 * 10,
-            'user' => JWTAuth::user()
+            'expires_in' => JWTAuth::factory()->getTTL(),
+            'user' => [
+                'id' => $user->id,
+                'first_name' => $user->first_name,
+                'last_name' => $user->last_name,
+                'username' => $user->username,
+                'email' => $user->email,
+                'bio' => $user->bio,
+                'profile_picture' => $user->profile_picture
+            ]
         ]);
-
     }
-    public function user(){
-        return response()->json(JWTAuth::user());
+    
+    public function user() {
+        $user = JWTAuth::user();
+        return response()->json([
+            'id' => $user->id,
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
+            'username' => $user->username,
+            'email' => $user->email,
+            'bio' => $user->bio,
+            'profile_picture' => $user->profile_picture
+        ]);
     }
+    
     public function logout(){
         try{
             JWTAuth::invalidate(JWTAuth::getToken());

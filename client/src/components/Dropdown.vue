@@ -4,7 +4,16 @@
             <div v-for="(group, index) in column.groups" :key="index" class="mb-2">
                 <p class="text-xs text-300 font-medium m-1">{{ group.title }}</p>
                 <li v-for="(item, idx) in group.items" :key="idx">
-                    <Link :to="item.to" class="w-12 text-left border-round-md" severity="secondary" :label="item.label" :icon="item.icon" :badge="item.badge" :badgeSeverity="item.badgeSeverity"/>
+                    <Link 
+                        :to="item.to" 
+                        :class="['w-12 text-left border-round-md', item.class]" 
+                        severity="secondary" 
+                        :label="item.label" 
+                        :icon="item.icon" 
+                        :badge="item.badge" 
+                        :badgeSeverity="item.badgeSeverity"
+                        :clickHandler="item.clickHandler"
+                    />
                 </li>
             </div>
         </ul>
@@ -13,6 +22,7 @@
 
 <script>
 import Link from './Link.vue';
+import AuthServices from '@/services/AuthServices';
 
 export default {
     components: {
@@ -31,9 +41,9 @@ export default {
             type: Array,
             required: true,
         },
-        badgeSeverity:{
-            type:String,
-            required:false,
+        badgeSeverity: {
+            type: String,
+            required: false,
         }
     },
 };
@@ -44,9 +54,9 @@ export default {
     border-radius: 8px;
     position: absolute;
     margin-top: 5px;
-    z-index:100;
+    z-index: 100;
 }
-.p-badge{
-    font-size:12px;
+.p-badge {
+    font-size: 12px;
 }
 </style>

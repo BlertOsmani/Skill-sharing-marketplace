@@ -90,8 +90,8 @@
             }
       },
     },
-    async mounted(){
-      await this.getFeaturedCourses();
+    mounted(){
+      this.getFeaturedCourses();
     }
   };
   </script>

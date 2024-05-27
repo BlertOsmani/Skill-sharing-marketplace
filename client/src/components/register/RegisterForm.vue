@@ -67,7 +67,6 @@ async function handleSubmit(){
             console.log("There was a problem with the fetch operation: ", error);
         }
       }
-  }
 }
 
 function updateErrors(errors) {

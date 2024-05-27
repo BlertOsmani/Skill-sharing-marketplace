@@ -1,5 +1,5 @@
 <template>
-    <div v-if="cards.length > 0" class="mb-5">
+    <div class="mb-5">
       <div class="flex flex-row align-items-center justify-content-between">
         <h2>Enrolled in</h2>
         <Button severity="contrast" label="View all" outlined></Button>
@@ -24,7 +24,6 @@
   </template>
   
 <script>
-import AuthServices from '@/services/AuthServices';
   import uiUxCourse from '../../assets/images/ui-ux-course.avif';
   import uiUxCourse2 from '../../assets/images/ui-ux-course-2.jpg';
   import uiUxCourse3 from '../../assets/images/ui-ux-course-3.jpeg';
@@ -45,12 +44,10 @@ import AuthServices from '@/services/AuthServices';
       };
     },
     methods: {
-      async getEnrolledCourses() {        
-        const user = await AuthServices.getProfile();
-        const userId = user.data.id;
+      async getEnrolledCourses() {
         const limit = 4;
         try {
-          const response = await fetch(`http://127.0.0.1:8000/api/course/enrolled?limit=${limit}&userId=${userId}`, {
+          const response = await fetch(`http://127.0.0.1:8000/api/course/enrolled?limit=${limit}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -62,10 +59,6 @@ import AuthServices from '@/services/AuthServices';
             throw new Error('Something went wrong fetching the courses you are enrolled in. Please refresh the page!');
           }
           const data = await response.json();
-          if(data.message){
-            return;
-          }
-          else{
           // Assuming the response data structure matches the card data structure
           this.cards = data.map(course => ({
             id: course.course_id,
@@ -78,14 +71,13 @@ import AuthServices from '@/services/AuthServices';
             category: course.category_name,
             duration: "4h 8min",
           }));
-        }
         } catch (error) {
           console.error('Error fetching learning data:', error);
         }
     },
     },
-    async mounted(){
-      await this.getEnrolledCourses();
+    mounted(){
+      this.getEnrolledCourses();
     }
   };
   </script>

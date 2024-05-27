@@ -22,7 +22,7 @@
                             <Dot v-if="showDot"/>
                             <p class="text-xs text-400 font-semibold">{{duration}}</p>
                         </div>
-                        <div v-if="isAuthenticated" class="flex justify-content-end align-items-center">
+                        <div class="flex justify-content-end align-items-center">
                             <Button icon="pi pi-bookmark text-lg" severity="secondary" @click="dialogVisible = true" text></Button>
                             <SaveCourseDialog
                                 :visible="dialogVisible"
@@ -39,8 +39,6 @@
     </div>
 </template>
 <script>
-import { ref, onMounted } from 'vue';
-import AuthServices from "@/services/AuthServices";
 import Button from 'primevue/button';
 import Dot from '../Dot.vue';
 import Tag from 'primevue/tag';
@@ -91,23 +89,6 @@ export default {
       hideIcon(){
         this.isIconVisible = false;
       }
-    },
-    setup() {
-        const isAuthenticated = ref(localStorage.getItem('authToken') !== null);
-
-        onMounted(async () => {
-        const user = await AuthServices.getProfile();
-        if (user) {
-            isAuthenticated.value = true;
-        } else {
-            isAuthenticated.value = false;
-            localStorage.removeItem('authToken');
-        }
-        });
-
-        return {
-            isAuthenticated,
-        };
     }
 }
 </script>
