@@ -120,6 +120,7 @@ import Dropdown from "primevue/dropdown";
 import Listbox from "primevue/listbox";
 import FloatLabel from "primevue/floatlabel";
 import FileUpload from "primevue/fileupload";
+import AuthServices from "@/services/AuthServices";
 
 export default {
   props: {
@@ -231,8 +232,9 @@ export default {
     };
 
     async function saveCourseData() {
+      const user = await AuthServices.getProfile();
       const formData = new FormData();
-      formData.append("user_id", 1); // replace with actual user ID
+      formData.append("user_id", user.data.id);
       formData.append("title", course.value.title);
       formData.append("category_id", course.value.category_id.id);
       formData.append("level_id", course.value.level_id.id);

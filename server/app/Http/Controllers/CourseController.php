@@ -175,4 +175,125 @@ class CourseController extends Controller
 
         return response()->json($course, 201);
     }
+    public function getCoursesByUser(Request $request, $userId) {
+        $courses = Course::whereHas('user', function ($query) use ($userId) {
+                            $query->where('id', $userId);
+                        })
+                        ->with(['user', 'category', 'level', 'lessons', 'reviews.user', 'enrollments'])
+                        ->withCount('enrollments')
+                        ->withAvg('reviews', 'rating')
+                        ->orderByDesc('enrollments_count')
+                        ->orderByDesc('reviews_avg_rating')
+                        ->get()
+                        ->map(function($course) {
+                            $totalLessonDuration = $course->lessons->sum(function($lesson) {
+                                $parts = explode(':', $lesson->duration);
+                                $hours = isset($parts[0]) ? (int)$parts[0] : 0;
+                                $minutes = isset($parts[1]) ? (int)$parts[1] : 0;
+                                $seconds = isset($parts[2]) ? (int)$parts[2] : 0;
+                                return $hours * 60 + $minutes + $seconds / 60;
+                            });
+    
+                            return [
+                                'course_id' => $course->id,
+                                'course_title' => $course->title,
+                                'course_tags' => $course->tags,
+                                'course_thumbnail' => $course->thumbnail,
+                                'author' => $course->user->first_name . ' ' . $course->user->last_name,
+                                'category_name' => $course->category->name,
+                                'course_price' => $course->price,
+                                'number_of_lessons' => $course->lessons->count(),
+                                'number_of_enrollments' => $course->enrollments->count(),
+                                'duration' => $totalLessonDuration
+                            ];
+                        });
+    
+        return response()->json($courses);
+    }
+    public function deleteCourse(Request $request, $id){
+        $course = Course::find($id);
+
+        if(!$course){
+            return response()->json([
+                'success' => false,
+                'message' => 'Course not found'
+            ], 404);
+        }
+        try {
+            // Perform the deletion
+            $course->delete();
+
+            // Return a success response
+            return response()->json([
+                'success' => true,
+                'message' => 'Course deleted successfully'
+            ], 200);
+        } catch (\Exception $e) {
+            // Log the exception
+            Log::error('Error deleting course: ', ['error' => $e->getMessage()]);
+
+            // Return an error response
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete the Course',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function updateCourse(Request $request, $id)
+    {
+        try{
+            // Retrieve the lesson by id
+            $course = Course::find($id);
+
+            // Check if lesson exists
+            if (!$course) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Course not found'
+                ], 404);
+            }
+
+            // Validate the incoming request data
+            $validatedData = $request->validate([
+            'title' => 'required|string',
+            'description' => 'string',
+            'price' => 'numeric',
+            'category_id' => 'required|numeric',
+            'level_id' => 'required|numeric',
+            'tags' => 'string',
+            'video' => 'required',
+            'thumbnail' => 'required',
+            ]);
+
+            $coverImagePath = $request->file('thumbnail')->store('thumbnails', 'public');
+         $salesVideoPath = $request->file('video')->store('videos', 'public');
+
+        $coverImageUrl = url('storage/' . $coverImagePath);
+        $salesVideoUrl = url('storage/' . $salesVideoPath);
+
+
+
+        $course->title = $validatedData['title'];
+        $course->description = $validatedData['description'];
+        $course->price = $validatedData['price'];
+        $course->category_id = $validatedData['category_id'];
+        $course->level_id = $validatedData['level_id'];
+        $course->tags = $validatedData['tags'];
+        $course->thumbnail = asset($coverImageUrl);
+        $course->video = asset($salesVideoUrl);
+            $course->update();
+
+            // Return a JSON response indicating success
+            return response()->json([
+                'success' => true,
+                'message' => 'Course updated successfully',
+                'data' => $course
+            ]);
+        }catch(\Exception $e){
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    
 }
+

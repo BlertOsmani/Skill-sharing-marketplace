@@ -1,4 +1,5 @@
 
+
 // src/router.js
 import { createRouter, createWebHistory } from 'vue-router';
 import Register from './views/Register.vue';
@@ -12,7 +13,10 @@ import CourseDetails from './views/CourseDetails.vue';
 import Albums from './views/Albums.vue';
 import AlbumCourses from './views/AlbumCourse.vue';
 import CreateCourse from "./views/CreateCourse.vue";
+import MyCourses from "./views/MyCourses.vue";
+import CourseLessons from "./views/CourseLessons.vue";
 import Categories from "./views/Categories.vue";
+
 
 const routes = [
   { path: '/register', component: Register },
@@ -25,6 +29,12 @@ const routes = [
   { path : '/forgotpassword', component: ForgotPassword},
   { path : '/resetpassword', component: ResetPassword},
   { path: "/course/create", component: CreateCourse },
+  { path: "/my-courses", component: MyCourses },
+  {
+    path: "/my-courses/lessons",
+    name: "CourseLessons",
+    component: CourseLessons,
+  },
   { path : '/course/enroll', component: Lessons},
   {path: '/categories', component: Categories}
 

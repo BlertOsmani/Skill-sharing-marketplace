@@ -131,7 +131,7 @@
 
 <script setup>
 import { ref, watch, onMounted } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { useToast } from "primevue/usetoast";
 import Toast from "primevue/toast";
 import { defineProps } from "vue";
@@ -152,11 +152,12 @@ const props = defineProps({
   },
 });
 
+const route = useRoute();
 const router = useRouter();
 const showDialog = ref(false);
 const lesson = ref({
   id: null,
-  course_id: props.courseId,
+  course_id: route.query.courseId,
   title: "",
   video_url: null,
   content: "",
@@ -228,7 +229,7 @@ const confirmDelete = async () => {
   }
 };
 
-const getLesson = async (id) => {
+const showLesson = async (id) => {
   try {
     const response = await fetch(
       `http://127.0.0.1:8000/api/course/lesson/get?course_id=${id}`,
@@ -242,26 +243,20 @@ const getLesson = async (id) => {
       }
     );
     if (!response.ok) {
-      throw new Error(
-        "Something went wrong fetching the courses you are enrolled in. Please refresh the page!"
-      );
+      throw new Error("Failed to fetch lessons");
     }
-    const data = await response.json();
-    lessons.value = data.map((lesson) => ({
-      id: lesson.id,
-      courseId: lesson.course_id,
-      title: lesson.title,
-      video_url: lesson.video_url,
-      content: lesson.content,
-      duration: lesson.duration,
-    }));
-    // Assuming the response data structure matches the card data structure
+    lessons.value = await response.json();
   } catch (error) {
-    console.error("Error fetching learning data:", error);
+    toast.value.add({
+      severity: "error",
+      summary: "Error",
+      detail: "Failed to fetch lessons",
+      life: 3000,
+    });
   }
 };
 onMounted(() => {
-  getLesson(props.courseId);
+  showLesson(route.query.courseId);
 });
 
 const updateLesson = async (id) => {
@@ -301,7 +296,7 @@ const updateLesson = async (id) => {
       summary: "Success",
       detail: "Lesson updated successfully",
     });
-    getLesson(props.courseId);
+    showLesson(lesson.value.course_id);
 
     showDialog.value = false;
     resetLesson();
@@ -317,7 +312,7 @@ const updateLesson = async (id) => {
 
 const saveLesson = async () => {
   const formData = new FormData();
-  formData.append("course_id", props.courseId);
+  formData.append("course_id", lesson.value.course_id);
   formData.append("title", lesson.value.title);
   if (lesson.value.video_url) {
     formData.append("video_url", lesson.value.video_url);
@@ -349,7 +344,7 @@ const saveLesson = async () => {
       summary: "Success",
       detail: "Lesson saved successfully",
     });
-    getLesson(props.courseId);
+    showLesson(lesson.value.course_id);
 
     showDialog.value = false;
     resetLesson();
@@ -373,7 +368,7 @@ const saveOrUpdateLesson = async () => {
 
 const resetLesson = () => {
   lesson.value = {
-    course_id: props.courseId,
+    course_id: route.query.courseId,
     title: "",
     content: "",
     video_url: null,
