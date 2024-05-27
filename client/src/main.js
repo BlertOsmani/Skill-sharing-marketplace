@@ -12,7 +12,7 @@ import '/node_modules/primeflex/primeflex.css';
 import 'primevue/resources/primevue.min.css';
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:8000/api/forgot';
+axios.defaults.baseURL = 'http://localhost:8000/api/';
 
 
 // Create the app and configure PrimeVue, router, and ToastService

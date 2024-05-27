@@ -10,6 +10,8 @@ use App\Models\Favorite;
 use App\Models\FavoriteAlbum;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\LessonController;
+use App\Http\Controllers\ReviewController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -20,7 +22,7 @@ Route::post('/user/create', [UserController::class, 'register']);
 Route::get('/course/enrolled', [CourseController::class, 'getEnrolledCourses']);
 
 Route::get('/user/toptutors', [UserController::class, 'getTopTutors']);
-Route::get('/user/toptutors', [UserController::class, 'getTopTutors']);
+
 
 Route::get('/search',[SearchController::class, 'search']);
 
@@ -36,3 +38,9 @@ Route::get('/album/saved/get', [FavoritesController::class, 'getSavedCourses']);
 Route::post('/forgot', [ForgotPasswordController::class, 'sendResetLinkEmail']);
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+
+Route::get('courses/{courseId}/lessons', [LessonController::class, 'getLessonsByCourse']);
+
+Route::post('/reviews', [ReviewController::class, 'createReview']);
+
+Route::get('/reviews/{courseId}', [ReviewController::class, 'courseReview']);
