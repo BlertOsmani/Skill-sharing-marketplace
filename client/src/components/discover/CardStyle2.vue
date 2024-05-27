@@ -1,6 +1,6 @@
 <template>
     <div class="card border-round-md surface-card w-custom-card flex flex-column">
-      <Link to="/" :highlight="false" class="align-items-stretch border-round-md surface-card flex-shrink-0 p-0 flex flex-column" @mouseover="showIcon" @mouseleave="hideIcon">
+      <Link :to="{path: '/course/details', query:{course_id: id}}" :highlight="false" class="align-items-stretch border-round-md surface-card flex-shrink-0 p-0 flex flex-column" @mouseover="showIcon" @mouseleave="hideIcon">
       <p class="hidden">{{ id }}</p>
       <div class="flex flex-column relative">
         <img :src="coverPhoto" class="course-image border-round-md border-noround-bottom" alt="Image" />
@@ -24,7 +24,9 @@
             <span class="text-xs text-400">{{duration}}</span>
           </div>
           <div class="flex flex-row align-items-center">
-            <Button icon="pi pi-bookmark text-lg" severity="secondary" @click="dialogVisible = true" text></Button>
+            <div @click.stop.prevent="saveCourse">
+                <Button icon="pi pi-bookmark text-lg" severity="secondary" text></Button>
+            </div>
             <SaveCourseDialog
                 :visible="dialogVisible"
                 @update:visible="dialogVisible = $event"
@@ -103,6 +105,9 @@ export default {
       },
       hideIcon(){
         this.isIconVisible = false;
+      },
+      saveCourse() {
+            this.dialogVisible = true;
       }
     }
 }

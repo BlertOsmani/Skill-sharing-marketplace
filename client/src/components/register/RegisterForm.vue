@@ -68,7 +68,6 @@ async function handleSubmit(){
         }
       }
   }
-}
 
 function updateErrors(errors) {
   serverSidePasswordError.value = errors.password ? errors.password[0] : "";

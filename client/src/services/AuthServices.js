@@ -10,4 +10,20 @@ export default {
       },
     });
   },
+  logout() {
+    try {
+      const response = axios.post(
+        `${API_URL}/auth/user/logout`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+          },
+        }
+      );
+      localStorage.removeItem('authToken');
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to log out, please try again');
+    }
+  },
 };

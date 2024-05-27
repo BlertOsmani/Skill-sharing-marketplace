@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import { useToast } from 'primevue/usetoast';
+import AuthServices from "@/services/AuthServices";
 
 const toast = useToast();
 const albumTitle = ref('');
@@ -16,6 +17,8 @@ const props = defineProps({
 const emit = defineEmits(['update:visible', 'albumCreated']);
 
 async function createAlbum() {
+    const user = await AuthServices.getProfile();
+    const userId = user.data.id;
     try {
         const response = await fetch("http://127.0.0.1:8000/api/album/create", {
             method: 'POST',
@@ -25,6 +28,7 @@ async function createAlbum() {
             },
             mode: 'cors',
             body: JSON.stringify({
+                userId: userId,
                 title: albumTitle.value
             })
         });
