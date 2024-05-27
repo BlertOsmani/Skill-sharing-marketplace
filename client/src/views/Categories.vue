@@ -1,0 +1,102 @@
+<template>
+  <div class="px-5 my-6">
+    <h2>{{ categoryTitle }}</h2>
+    <div class="flex justify-content-start overflow-auto flex-wrap flex-row gap-3">
+      <Courses v-for="(course, index) in courses"
+        :key="course.id"
+        :id="course.id"
+        :thumbnail="course.thumbnail"
+        :title="course.title"
+        :category="course.category"
+        :author="course.author"
+        :info="course.info"
+        :duration="course.duration"
+        :enrolled="course.enrolled"
+      />
+    </div>
+  </div>
+</template>
+
+<script>
+import Courses from '../components/category/Courses.vue';
+
+export default {
+  components: {
+    Courses,
+  },
+  data() {
+    return {
+      courses: [],
+      categoryTitle: '',
+      categoryId: '',
+    };
+  },
+  methods: {
+    async getCoursesByCategory() {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/api/category/${this.categoryId}/courses`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+          },
+          mode: 'cors',
+        });
+        if (!response.ok) {
+          throw new Error('Something went wrong fetching the saved courses. Please refresh the page!');
+        }
+        const data = await response.json();
+        console.log('API Response:', data); // Log the API response for debugging
+        this.courses = data.map(course => {
+          const lessons = course.number_of_lessons;
+          const tags = course.course_tags;
+          let info = '';
+
+          if (!lessons || lessons.length === 0) {
+            info = tags || '';
+          } else if (!tags || tags.length === 0) {
+            info = lessons;
+          } else {
+            info = lessons; // Default to lessons if both are present
+          }
+
+          return {
+            id: course.course_id,
+            title: course.course_title,
+            category: course.category_name,
+            author: course.author,
+            thumbnail: course.course_thumbnail,
+            enrolled: `${course.number_of_enrollments} enrolled`,
+            lessons: lessons,
+            tags: tags,
+            info: info
+          };
+        });
+        console.log('Mapped Courses:', this.courses); // Log the mapped courses for debugging
+      } catch (error) {
+        console.error(error.message);
+      }
+    },
+  },
+  watch: {
+    '$route.query.id'(newQuery) {
+      this.categoryId = newQuery || '';
+      this.getCoursesByCategory();
+    },
+    '$route.query.name'(newQuery) {
+      this.categoryTitle = newQuery || '';
+    }    
+  },
+  created() {
+    this.categoryTitle = this.$route.query.name; 
+    this.categoryId = this.$route.query.id;
+  },
+  mounted() {
+    this.getCoursesByCategory();
+  },
+}
+</script>
+
+<style lang="">
+/* Add any specific styles here */
+</style>
