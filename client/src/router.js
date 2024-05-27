@@ -9,6 +9,7 @@ import Albums from "./views/Albums.vue";
 import Lessons from './views/Lessons.vue';
 import AlbumCourses from "./views/AlbumCourse.vue";
 import CreateCourse from "./views/CreateCourse.vue";
+import Categories from "./views/Categories.vue";
 
 const routes = [
   { path: "/register", component: Register },
@@ -21,6 +22,7 @@ const routes = [
   { path: "/resetpassword", component: ResetPassword },
   { path: "/course/create", component: CreateCourse },
   { path : '/enroll', component: Lessons},
+  {path: '/categories', component: Categories}
 ];
 
 const router = createRouter({

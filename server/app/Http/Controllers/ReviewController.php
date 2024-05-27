@@ -33,7 +33,9 @@ class ReviewController extends Controller
             // Load the course along with necessary relationships
             $course = Course::with([
                 'user', // To include the user who authored the course
-                'reviews' // To include the user who wrote the review
+                'reviews' => function($query) {
+                    $query->orderBy('created_at', 'desc'); // Order reviews by creation date in descending order
+                } // To include the user who wrote the review
             ])->findOrFail($courseId);
     
             // Prepare course details

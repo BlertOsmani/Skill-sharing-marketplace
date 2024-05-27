@@ -40,6 +40,7 @@ Route::delete('/lesson/delete/{id}', [LessonController::class, 'deleteLesson']);
 Route::post('/forgot', [ForgotPasswordController::class, 'sendResetLinkEmail']);
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::get('/category', [CategoryController::class, 'getCoursesByCategory']);
 Route::get('courses/{courseId}/lessons', [LessonController::class, 'getLessonsByCourse']);
 Route::post('/reviews', [ReviewController::class, 'createReview']);
 Route::get('/reviews/{courseId}', [ReviewController::class, 'courseReview']);
