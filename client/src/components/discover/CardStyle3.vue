@@ -1,6 +1,6 @@
 <template lang="">
     <div class="flex w-custom-card surface-card border-round-md mb-4">
-        <Link to="/" class="surface-card flex flex-column p-0" @mouseover="showIcon" @mouseleave="hideIcon">
+        <Link :to="{path: '/course/details', query:{course_id: id}}" class="surface-card flex flex-column p-0" @mouseover="showIcon" @mouseleave="hideIcon">
             <div class="flex flex-column w-12">
                 <p class="hidden">{{id}}</p>
                 <div class="flex flex-column relative">

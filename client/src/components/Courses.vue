@@ -1,7 +1,7 @@
 <template lang="">
-        <Link to="" :class="customClass" class="surface-card flex flex-column p-0" @mouseover="showIcon" @mouseleave="hideIcon">
+        <Link :to="{path: '/course/details', query:{course_id: id}}" :class="customClass" class="surface-card flex flex-column p-0" @mouseover="showIcon" @mouseleave="hideIcon">
             <div class="flex flex-column w-12">
-                <p class="hidden">{{id}}</p>
+                <p class="hidden">{{id}}</p>        
                 <div class="flex flex-column relative">
                     <img class="w-12" :src="thumbnail" alt="">
                     <i class="pi pi-play-circle text-3xl text-900 absolute top-50 left-50 translate-5050" :class="{ hidden: !isIconVisible }"></i>

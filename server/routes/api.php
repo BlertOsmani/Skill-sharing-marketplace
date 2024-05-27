@@ -14,6 +14,7 @@ use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\EnrollmentController;
 
 Route::middleware('auth:api')->get('/user', [UserController::class, 'user']);
 Route::group(['middleware' => 'api', 'prefix' => 'auth'], function($router){
@@ -26,6 +27,7 @@ Route::get('/course/enrolled', [CourseController::class, 'getEnrolledCourses']);
 Route::get('/user/toptutors', [UserController::class, 'getTopTutors']);
 Route::get('/search',[SearchController::class, 'search']);
 Route::get('/course/featured', [CourseController::class, 'getFeaturedCourses']);
+Route::get('/course/details', [CourseController::class, 'courseDetails']);
 Route::post('/album/create', [FavoritesController::class, 'createAlbum']);
 Route::get('/album/get', [FavoritesController::class, 'getAlbums']);
 Route::post('/course/save', [FavoritesController::class, 'saveCourse']);
@@ -44,3 +46,4 @@ Route::get('/category', [CategoryController::class, 'getCoursesByCategory']);
 Route::get('courses/{courseId}/lessons', [LessonController::class, 'getLessonsByCourse']);
 Route::post('/reviews', [ReviewController::class, 'createReview']);
 Route::get('/reviews/{courseId}', [ReviewController::class, 'courseReview']);
+Route::post('/course/{courseId}/enroll', [EnrollmentController::class, 'enroll']);
