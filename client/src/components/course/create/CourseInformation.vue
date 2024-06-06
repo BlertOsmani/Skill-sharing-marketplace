@@ -249,8 +249,7 @@ export default {
       }
 
       try {
-        const response = await fetch(
-          "http://127.0.0.1:8000/api/course/create",
+        const response = await fetch("http://127.0.0.1:8000/api/course/create",
           {
             method: "POST",
             headers: {

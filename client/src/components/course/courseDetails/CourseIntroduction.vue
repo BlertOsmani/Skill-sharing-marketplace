@@ -29,6 +29,7 @@
 import Avatar from 'primevue/avatar';
 import Button from 'primevue/button';
 import axios from 'axios';
+import AuthServices from '../../../services/AuthServices';
 
 export default {
   components: {
@@ -57,7 +58,8 @@ export default {
       }
     },
     async enroll() {
-      const user_id = 1;  // Assuming you have the user ID in your Vuex store
+      const user = await AuthServices.getProfile();
+      const user_id = user.data.id;  // Assuming you have the user ID in your Vuex store
       const course_id = this.$route.query.course_id;
       
       try {

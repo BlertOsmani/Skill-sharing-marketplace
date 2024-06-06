@@ -1,5 +1,5 @@
 <template>
-    <div v-if="to">
+    <div v-if="to" class="w-12">
         <router-link :to="to" exact>
             <Button 
                 :label="label" 
@@ -15,7 +15,7 @@
             </Button>
         </router-link>
     </div>
-    <div v-else>
+    <div v-else class="w-12">
         <Button 
             :label="label" 
             :icon="icon" 

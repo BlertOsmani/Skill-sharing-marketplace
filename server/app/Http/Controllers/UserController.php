@@ -14,6 +14,8 @@ use Illuminate\Validation\ValidationException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Auth;
 
+
+
 class UserController extends Controller
 {
     protected $services;

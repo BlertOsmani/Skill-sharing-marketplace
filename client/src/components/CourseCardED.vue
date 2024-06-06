@@ -1,9 +1,7 @@
 <template lang="">
   <Link
     to=""
-    :class="customClass"
-    class="surface-card flex flex-column p-0"
-    style="width: 20rem"
+    class="surface-card flex flex-column p-0 w-12"
     @mouseover="showIcon"
     @mouseleave="hideIcon"
     @click="handleClick"
@@ -14,7 +12,7 @@
         <img
           class="h-12rem"
           :src="thumbnail"
-          style="width: 19rem; object-fit: cover"
+          style="object-fit: cover"
           alt=""
         />
         <i
@@ -27,7 +25,7 @@
           class="flex flex-row justify-content-between my-2 align-items-center"
         >
           <Tag severity="secondary" value="Web development">{{ category }}</Tag>
-          <p class="text-400 text-xs font-semibold">{{ enrolled }}</p>
+          <p class="text-400 text-xs font-semibold">{{ enrolled }} enrollments</p>
         </div>
         <div class="flex flex-column align-items-start">
           <p class="text-base font-semibold text-900 mt-3 mb-0">{{ title }}</p>

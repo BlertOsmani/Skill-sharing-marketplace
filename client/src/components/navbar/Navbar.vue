@@ -29,7 +29,6 @@
         <div
              class="links flex flex-row align-items-center justify-content-end w-4 relative"
         >
-
         <router-link to="/signup" class="links flex flex-row align-items-center justify-content-end w-12 relative">
             <Button
                 severity="primary"
@@ -42,7 +41,6 @@
     <div
       v-if="isAuthenticated" class="links flex flex-row align-items-center justify-content-end w-4 relative"
     >
-
        <router-link to="/course/create" class="links flex flex-row align-items-center justify-content-end w-auto relative">
         <Button
             severity="primary"
@@ -57,7 +55,7 @@
   </div>
 </template>
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import Links from "./Links.vue";
 import Button from "primevue/button";
 import Logo from "./Logo.vue";
@@ -73,11 +71,12 @@ export default {
     SearchInput,
   },
   setup() {
-    const isAuthenticated = ref(localStorage.getItem('authToken') !== null);
+    const isAuthenticated = ref(localStorage.getItem('authToken'));
 
     onMounted(async () => {
       const user = await AuthServices.getProfile();
       if (user) {
+        console.log(isAuthenticated);
         isAuthenticated.value = true;
       } else {
         isAuthenticated.value = false;
@@ -85,10 +84,16 @@ export default {
       }
     });
 
+    watch(isAuthenticated, (newValue) => {
+      if (!newValue) {
+        localStorage.removeItem('authToken');
+      }
+    });
+
     return {
       isAuthenticated,
     };
-  }
+  },
 };
 </script>
 <style lang="css"></style>

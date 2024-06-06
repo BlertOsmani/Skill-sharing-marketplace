@@ -1,7 +1,7 @@
 <template>
-  <div class="p-m-4">
+  <div class="px-5 my-6">
     <Toast />
-    <div class="flex flex-row justify-content-between">
+    <div class="flex flex-row justify-content-between mb-4">
       <Button
         label="New Lesson"
         icon="pi pi-plus"
@@ -232,7 +232,7 @@ const confirmDelete = async () => {
 const showLesson = async (id) => {
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/api/course/lesson/get?course_id=${id}`,
+      `http://127.0.0.1:8000/api/course/${id}/lessons`,
       {
         method: "GET",
         headers: {
@@ -399,6 +399,10 @@ const complete = () => {
 <style lang="css">
 .p-fluid .p-field {
   margin-bottom: 1rem;
+}
+
+.p-datatable-wrapper{
+  border-radius:0.375rem;
 }
 .new-lesson-dialog .p-dialog-content {
   display: flex;

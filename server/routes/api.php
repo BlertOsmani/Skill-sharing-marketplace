@@ -16,7 +16,12 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\EnrollmentController;
 
+
+
 Route::middleware('auth:api')->get('/user', [UserController::class, 'user']);
+
+
+
 Route::group(['middleware' => 'api', 'prefix' => 'auth'], function($router){
     Route::post('/user/create', [UserController::class, 'register']);
     Route::post('/user/login', [UserController::class, 'login']);
@@ -45,7 +50,7 @@ Route::get('password/reset/{token}', [ResetPasswordController::class, 'showReset
 Route::delete('course/delete/{id}', [CourseController::class, 'deleteCourse']);
 Route::post('course/update/{id}', [CourseController::class, 'updateCourse']);
 Route::get('/category/{categoryId}/courses', [CategoryController::class, 'getCoursesByCategory']);
-Route::get('/courses/{courseId}/lessons', [LessonController::class, 'getLessonsByCourse']);
+Route::get('/course/{courseId}/lessons', [LessonController::class, 'getLessonsByCourse']);
 Route::post('/reviews', [ReviewController::class, 'createReview']);
 Route::get('/course/{courseId}/reviews', [ReviewController::class, 'courseReview']);
 Route::post('/course/{courseId}/enroll', [EnrollmentController::class, 'enroll']);
