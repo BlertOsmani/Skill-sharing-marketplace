@@ -1,5 +1,5 @@
 <template lang="">
-        <Link :to="{path: '/course/details', query:{course_id: id}}" :class="customClass" class="surface-card flex flex-column p-0" @mouseover="showIcon" @mouseleave="hideIcon">
+        <Link :to="{path: '/course/details', query:{course_id: id}}" :class="customClass" class="surface-card flex flex-column p-0 w-12" @mouseover="showIcon" @mouseleave="hideIcon">
             <div class="flex flex-column w-12">
                 <p class="hidden">{{id}}</p>        
                 <div class="flex flex-column relative">

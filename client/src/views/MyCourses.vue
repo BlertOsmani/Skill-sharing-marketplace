@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex justify-content-start overflow-auto flex-wrap flex-row gap-3"
+    class="px-5 my-6 flex justify-content-start overflow-auto flex-wrap flex-row gap-3"
   >
     <MyCourse
       v-for="(card, index) in cards"

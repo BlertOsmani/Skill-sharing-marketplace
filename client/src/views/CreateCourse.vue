@@ -1,5 +1,5 @@
 <template>
-  <Stepper>
+  <Stepper class="px-5 my-6">
     <StepperPanel header="Course information">
       <template #content="{ nextCallback }">
         <CourseInformation
@@ -51,5 +51,8 @@ export default {
 <style lang="scss">
 .p-grid {
   margin-top: 2rem;
+}
+.p-stepper-panels{
+  border-radius: 0.375rem;
 }
 </style>

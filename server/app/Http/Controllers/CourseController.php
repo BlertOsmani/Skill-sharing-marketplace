@@ -8,6 +8,20 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * @OA\PathItem(
+ *     path="/api/resource",
+ *     @OA\Operation(
+ *         operationId="getResource",
+ *         summary="Get a resource",
+ *         @OA\Response(
+ *             response=200,
+ *             description="Successful operation"
+ *         )
+ *     )
+ * )
+ */
+
 class CourseController extends Controller
 {
     public function getEnrolledCourses(Request $request){
@@ -23,10 +37,11 @@ class CourseController extends Controller
                 'courses.tags as course_tags',
                 'courses.thumbnail as course_thumbnail'
             )
+                ->join('enrollments', 'courses.id', '=', 'enrollments.course_id')
                 ->join('categories', 'courses.category_id', '=', 'categories.id')
                 ->join('users', 'users.id', '=', 'courses.user_id')
                 ->join('levels', 'courses.level_id', '=', 'levels.id')
-                ->where('users.id', $userId)
+                ->where('enrollments.user_id', $userId)
                 ->withCount('enrollments');
             if($limit !== null){
                 $query->limit((int)$limit);
@@ -137,41 +152,54 @@ class CourseController extends Controller
     public function createCourse(Request $request)
     {
         // Validate the request
-        $validatedData = $request->validate([
-            'user_id' => 'required|numeric',
-            'title' => 'required|string',
-            'description' => 'required|string',
-            'price' => 'numeric',
-            'category_id' => 'required|numeric',
-            'level_id' => 'required|numeric',
-            'tags' => 'string',
-            'video' => 'required',
-            'thumbnail' => 'required',
-        ]);
-
-        // Store the uploaded files
-         $coverImagePath = $request->file('thumbnail')->store('thumbnails', 'public');
-         $salesVideoPath = $request->file('video')->store('videos', 'public');
-
-        $coverImageUrl = url('storage/' . $coverImagePath);
-        $salesVideoUrl = url('storage/' . $salesVideoPath);
-
-
-        // Create and save the course
-        $course = new Course();
-        $course->user_id = $validatedData['user_id'];
-        $course->title = $validatedData['title'];
-        $course->description = $validatedData['description'];
-        $course->price = $validatedData['price'];
-        $course->category_id = $validatedData['category_id'];
-        $course->level_id = $validatedData['level_id'];
-        $course->tags = $validatedData['tags'];
-        $course->thumbnail = asset($coverImageUrl);
-        $course->video = asset($salesVideoUrl);
-        $course->save();
-
-
-        return response()->json($course, 201);
+        try {
+            // Validate request data
+            $validatedData = $request->validate([
+                'user_id' => 'required|numeric',
+                'title' => 'required|string',
+                'description' => 'required|string',
+                'price' => 'numeric',
+                'category_id' => 'required|numeric',
+                'level_id' => 'required|numeric',
+                'tags' => 'string',
+                'video' => 'required', // Adjust max size as needed
+                'thumbnail' => 'required', // Adjust max size as needed
+            ]);
+    
+            // Store the uploaded files
+            try {
+                $coverImagePath = $request->file('thumbnail')->store('thumbnails', 'public');
+                $salesVideoPath = $request->file('video')->store('videos', 'public');
+            } catch (\Exception $e) {
+                Log::error('File storage error: ' . $e->getMessage());
+                return response()->json(['error' => 'File upload failed. Please try again.'], 500);
+            }
+    
+            $coverImageUrl = url('storage/' . $coverImagePath);
+            $salesVideoUrl = url('storage/' . $salesVideoPath);
+    
+            // Create and save the course
+            $course = new Course();
+            $course->user_id = $validatedData['user_id'];
+            $course->title = $validatedData['title'];
+            $course->description = $validatedData['description'];
+            $course->price = $validatedData['price'];
+            $course->category_id = $validatedData['category_id'];
+            $course->level_id = $validatedData['level_id'];
+            $course->tags = $validatedData['tags'];
+            $course->thumbnail = asset($coverImageUrl);
+            $course->video = asset($salesVideoUrl);
+            $course->save();
+    
+            return response()->json($course, 201);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Handle validation errors
+            return response()->json(['errors' => $e->getMessage()]);
+        } catch (\Exception $e) {
+            // Handle any other errors
+            Log::error('Course creation error: ' . $e->getMessage());
+            return response()->json(['error' => 'An error occurred while creating the course. Please try again.'], 500);
+        }
     }
     public function getCoursesByUser(Request $request, $userId) {
         $courses = Course::whereHas('user', function ($query) use ($userId) {

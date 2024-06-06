@@ -1,9 +1,9 @@
 <template>
     <div class="card border-round-md surface-card w-custom-card flex flex-column">
-      <Link :to="{path: '/course/details', query:{course_id: id}}" :highlight="false" class="align-items-stretch border-round-md surface-card flex-shrink-0 p-0 flex flex-column" @mouseover="showIcon" @mouseleave="hideIcon">
+      <Link :to="{path: '/course/enroll', query:{courseId: id}}" :highlight="false" class="w-12 align-items-stretch border-round-md surface-card flex-shrink-0 p-0 flex flex-column" @mouseover="showIcon" @mouseleave="hideIcon">
       <p class="hidden">{{ id }}</p>
       <div class="flex flex-column relative">
-        <img :src="coverPhoto" class="course-image border-round-md border-noround-bottom" alt="Image" />
+        <img :src="coverPhoto" style="object-fit:cover;" class="w-12 h-15rem course-image border-round-md border-noround-bottom" alt="Image" />
         <i class="pi pi-play-circle text-3xl text-900 absolute top-50 left-50 translate-5050" :class="{ hidden: !isIconVisible }"></i>
       </div>
       <div class="col-auto flex justify-content-between my-2 px-2 align-items-center">

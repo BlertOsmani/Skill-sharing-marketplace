@@ -1,10 +1,10 @@
 <template lang="">
     <div class="flex w-custom-card surface-card border-round-md mb-4">
-        <Link :to="{path: '/course/details', query:{course_id: id}}" class="surface-card flex flex-column p-0" @mouseover="showIcon" @mouseleave="hideIcon">
+        <Link :to="{path: '/course/details', query:{course_id: id}}" class="w-12 surface-card flex flex-column p-0" @mouseover="showIcon" @mouseleave="hideIcon">
             <div class="flex flex-column w-12">
                 <p class="hidden">{{id}}</p>
                 <div class="flex flex-column relative">
-                    <img class="w-12" :src="thumbnail" alt="">
+                    <img class="w-12 h-15rem" :src="thumbnail" alt="" style="object-fit:cover;">
                     <i class="pi pi-play-circle text-3xl text-900 absolute top-50 left-50 translate-5050" :class="{ hidden: !isIconVisible }"></i>
                 </div>
                 <div class="flex flex-column px-2">

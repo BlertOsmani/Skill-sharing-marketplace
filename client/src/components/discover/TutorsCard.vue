@@ -1,7 +1,7 @@
 <template lang="">
         <div class="instructor-card surface-card justify-content-center flex flex-column align-items-center border-100 border-solid border-1 border-round-md">
             <p class="hidden">{{id}}</p>
-            <Link :to="`/@${username}`" class="bg-none m-0 flex flex-column align-items-center">
+            <Link :to="`/@${username}`" class="w-12 bg-none m-0 flex flex-column align-items-center">
                 <Avatar :image="image" class="m-0 instructor-avatar" size="xlarge" />
                 <div>
                     <div class="flex flex-column align-items-center m-3">

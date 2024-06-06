@@ -9,6 +9,7 @@
       :info="info"
       :duration="duration"
       :enrolled="enrolled"
+      :class="class"
       @requireConfirmation="$emit('requireConfirmation', $event)"
       @openEditDialog="$emit('openEditDialog', $event)"
       @viewLessons="$emit('viewLessons', $event)"

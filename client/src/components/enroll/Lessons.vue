@@ -38,7 +38,7 @@ const lessons = ref([]);
 const fetchLessons = async () => {
     try {
         const courseId = route.query.courseId; // Replace with the actual course ID
-        const response = await axios.get(`courses/${courseId}/lessons`);
+        const response = await axios.get(`course/${courseId}/lessons`);
         lessons.value = response.data;
     } catch (error) {
         console.error("Error fetching lessons:", error);
