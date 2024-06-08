@@ -27,7 +27,7 @@ var serverSideUsernameError = ref("");
 async function handleSubmit(){  
     if(validateForm()){
         try {
-            const response = await fetch("http://127.0.0.1:8000/api/user/create", {
+            const response = await fetch("http://127.0.0.1:8000/api/auth/user/create", {
                 method: 'POST',
                 headers:{
                     'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ async function handleSubmit(){
                     resetErrors();
                 }
                 else{
-                    router.push('/login');
+                    router.push('/signin');
                     resetErrors();
                 }
             }
