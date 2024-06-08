@@ -1,0 +1,2534 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Swagger with Laravel",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/category/{categoryId}/courses": {
+            "get": {
+                "summary": "Retrieves all courses within a specific category",
+                "operationId": "12538fc3f1ab8b446392b6a989b08f92",
+                "parameters": [
+                    {
+                        "name": "categoryId",
+                        "in": "path",
+                        "description": "The ID of the category for which courses are to be retrieved",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of courses",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "course_id": {
+                                                "description": "ID of the course",
+                                                "type": "integer"
+                                            },
+                                            "course_title": {
+                                                "description": "Title of the course",
+                                                "type": "string"
+                                            },
+                                            "course_tags": {
+                                                "description": "Tags associated with the course",
+                                                "type": "string"
+                                            },
+                                            "course_thumbnail": {
+                                                "description": "URL of the course thumbnail image",
+                                                "type": "string"
+                                            },
+                                            "author": {
+                                                "description": "Name of the course author",
+                                                "type": "string"
+                                            },
+                                            "category_name": {
+                                                "description": "Name of the category to which the course belongs",
+                                                "type": "string"
+                                            },
+                                            "course_price": {
+                                                "description": "Price of the course",
+                                                "type": "number",
+                                                "format": "float"
+                                            },
+                                            "number_of_lessons": {
+                                                "description": "Total number of lessons in the course",
+                                                "type": "integer"
+                                            },
+                                            "number_of_enrollments": {
+                                                "description": "Total number of enrollments in the course",
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No courses found for the category"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/categories/get": {
+            "get": {
+                "summary": "Retrieves all course categories",
+                "operationId": "e824db2ae9802b65a1f62448e3101876",
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of all categories",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "ID of the category",
+                                                "type": "integer"
+                                            },
+                                            "name": {
+                                                "description": "Name of the category",
+                                                "type": "string"
+                                            },
+                                            "description": {
+                                                "description": "Description of the category",
+                                                "type": "string"
+                                            },
+                                            "created_at": {
+                                                "description": "Creation date of the category",
+                                                "type": "string",
+                                                "format": "date-time"
+                                            },
+                                            "updated_at": {
+                                                "description": "Last update date of the category",
+                                                "type": "string",
+                                                "format": "date-time"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/course/enrolled": {
+            "get": {
+                "summary": "Retrieves courses a user is enrolled in",
+                "operationId": "353bb3f334fbbb3ae51ef985b833d60d",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "query",
+                        "description": "The ID of the user whose enrolled courses are to be retrieved",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit the number of courses returned",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of courses",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "course_id": {
+                                                "description": "Course ID",
+                                                "type": "integer"
+                                            },
+                                            "course_author": {
+                                                "description": "Author of the course",
+                                                "type": "string"
+                                            },
+                                            "course_title": {
+                                                "description": "Title of the course",
+                                                "type": "string"
+                                            },
+                                            "category_name": {
+                                                "description": "Category of the course",
+                                                "type": "string"
+                                            },
+                                            "level_name": {
+                                                "description": "Level of the course",
+                                                "type": "string"
+                                            },
+                                            "course_tags": {
+                                                "description": "Tags associated with the course",
+                                                "type": "string"
+                                            },
+                                            "course_thumbnail": {
+                                                "description": "Thumbnail image URL of the course",
+                                                "type": "string"
+                                            },
+                                            "enrollments_count": {
+                                                "description": "Number of enrollments in the course",
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No courses found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/course/featured/{limit}": {
+            "get": {
+                "summary": "Retrieves featured courses based on enrollments and reviews",
+                "operationId": "f3f7284b3a233dd87d5ac7ea82f80a92",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "path",
+                        "description": "The number of featured courses to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of featured courses",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "course_id": {
+                                                "description": "ID of the course",
+                                                "type": "integer"
+                                            },
+                                            "course_title": {
+                                                "description": "Title of the course",
+                                                "type": "string"
+                                            },
+                                            "course_tags": {
+                                                "description": "Tags associated with the course",
+                                                "type": "array",
+                                                "items": {
+                                                    "description": "A single tag related to the course",
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "course_thumbnail": {
+                                                "description": "URL of the course thumbnail",
+                                                "type": "string"
+                                            },
+                                            "author": {
+                                                "description": "Name of the course author",
+                                                "type": "string"
+                                            },
+                                            "category_name": {
+                                                "description": "Category of the course",
+                                                "type": "string"
+                                            },
+                                            "course_price": {
+                                                "description": "Price of the course",
+                                                "type": "number"
+                                            },
+                                            "number_of_lessons": {
+                                                "description": "Number of lessons in the course",
+                                                "type": "integer"
+                                            },
+                                            "number_of_enrollments": {
+                                                "description": "Number of enrollments in the course",
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No course found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "No course found",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message detailing an internal error",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/course/details/{courseId}": {
+            "get": {
+                "summary": "Retrieves detailed information about a specific course",
+                "operationId": "1f38cb45bebeed6061d440dbf0208851",
+                "parameters": [
+                    {
+                        "name": "courseId",
+                        "in": "path",
+                        "description": "The ID of the course",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detailed information about the course",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "course_id": {
+                                            "description": "Course ID",
+                                            "type": "integer"
+                                        },
+                                        "course_title": {
+                                            "description": "Title of the course",
+                                            "type": "string"
+                                        },
+                                        "course_description": {
+                                            "description": "Description of the course",
+                                            "type": "string"
+                                        },
+                                        "course_tags": {
+                                            "description": "Tags associated with the course",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "course_thumbnail": {
+                                            "description": "URL of the course thumbnail image",
+                                            "type": "string"
+                                        },
+                                        "course_video": {
+                                            "description": "URL of the main course video",
+                                            "type": "string"
+                                        },
+                                        "author": {
+                                            "description": "Full name of the course author",
+                                            "type": "string"
+                                        },
+                                        "category_name": {
+                                            "description": "Category of the course",
+                                            "type": "string"
+                                        },
+                                        "course_price": {
+                                            "description": "Price of the course",
+                                            "type": "number",
+                                            "format": "float"
+                                        },
+                                        "course_level": {
+                                            "description": "Difficulty level of the course",
+                                            "type": "string"
+                                        },
+                                        "lessons": {
+                                            "description": "List of lessons in the course",
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "title": {
+                                                        "description": "Title of the lesson",
+                                                        "type": "string"
+                                                    },
+                                                    "duration": {
+                                                        "description": "Duration of the lesson",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "total_lesson_duration": {
+                                            "description": "Total duration of all lessons, in minutes",
+                                            "type": "number"
+                                        },
+                                        "number_of_lessons": {
+                                            "description": "Total number of lessons in the course",
+                                            "type": "integer"
+                                        },
+                                        "number_of_enrollments": {
+                                            "description": "Total number of enrollments in the course",
+                                            "type": "integer"
+                                        },
+                                        "average_rating": {
+                                            "description": "Average rating of the course",
+                                            "type": "number",
+                                            "format": "float"
+                                        },
+                                        "reviews": {
+                                            "description": "List of reviews for the course",
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "user_id": {
+                                                        "description": "ID of the user who reviewed",
+                                                        "type": "integer"
+                                                    },
+                                                    "user": {
+                                                        "description": "Name of the user who reviewed",
+                                                        "type": "string"
+                                                    },
+                                                    "rating": {
+                                                        "description": "Rating given by the user",
+                                                        "type": "integer"
+                                                    },
+                                                    "review_text": {
+                                                        "description": "Text of the review",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error if there is a problem fetching course details"
+                    }
+                }
+            }
+        },
+        "/api/course/create": {
+            "post": {
+                "summary": "Creates a new course",
+                "operationId": "2d22f0d80aeaea3717d3f6231aeabec9",
+                "requestBody": {
+                    "description": "Data needed to create a new course",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "user_id",
+                                    "title",
+                                    "description",
+                                    "category_id",
+                                    "level_id",
+                                    "video",
+                                    "thumbnail"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "description": "ID of the user creating the course",
+                                        "type": "integer"
+                                    },
+                                    "title": {
+                                        "description": "Title of the course",
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "description": "Description of the course",
+                                        "type": "string"
+                                    },
+                                    "price": {
+                                        "description": "Price of the course, can be omitted for free courses",
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "category_id": {
+                                        "description": "ID of the category the course belongs to",
+                                        "type": "integer"
+                                    },
+                                    "level_id": {
+                                        "description": "ID of the difficulty level of the course",
+                                        "type": "integer"
+                                    },
+                                    "tags": {
+                                        "description": "Comma-separated tags associated with the course",
+                                        "type": "string"
+                                    },
+                                    "video": {
+                                        "description": "Video file for the course",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "thumbnail": {
+                                        "description": "Thumbnail image for the course",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Course created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "ID of the newly created course",
+                                            "type": "integer"
+                                        },
+                                        "title": {
+                                            "description": "Title of the course",
+                                            "type": "string"
+                                        },
+                                        "description": {
+                                            "description": "Description of the course",
+                                            "type": "string"
+                                        },
+                                        "price": {
+                                            "description": "Price of the course",
+                                            "type": "number",
+                                            "format": "float"
+                                        },
+                                        "category_id": {
+                                            "description": "Category ID of the course",
+                                            "type": "integer"
+                                        },
+                                        "level_id": {
+                                            "description": "Level ID of the course",
+                                            "type": "integer"
+                                        },
+                                        "tags": {
+                                            "description": "Tags associated with the course",
+                                            "type": "string"
+                                        },
+                                        "thumbnail": {
+                                            "description": "URL of the course thumbnail",
+                                            "type": "string"
+                                        },
+                                        "video": {
+                                            "description": "URL of the course video",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error"
+                    },
+                    "500": {
+                        "description": "Internal server error or file upload failure"
+                    }
+                }
+            }
+        },
+        "/api/users/{userId}/courses": {
+            "get": {
+                "summary": "Retrieves all courses created by a specific user",
+                "operationId": "1b8160896e3b7c520216320addaaae35",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "The ID of the user whose courses are to be retrieved",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of courses created by the user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "course_id": {
+                                                "description": "ID of the course",
+                                                "type": "integer"
+                                            },
+                                            "course_title": {
+                                                "description": "Title of the course",
+                                                "type": "string"
+                                            },
+                                            "course_tags": {
+                                                "description": "Tags associated with the course",
+                                                "type": "string"
+                                            },
+                                            "course_thumbnail": {
+                                                "description": "URL of the course thumbnail image",
+                                                "type": "string"
+                                            },
+                                            "author": {
+                                                "description": "Name of the course author",
+                                                "type": "string"
+                                            },
+                                            "category_name": {
+                                                "description": "Name of the category to which the course belongs",
+                                                "type": "string"
+                                            },
+                                            "course_price": {
+                                                "description": "Price of the course",
+                                                "type": "number",
+                                                "format": "float"
+                                            },
+                                            "number_of_lessons": {
+                                                "description": "Total number of lessons in the course",
+                                                "type": "integer"
+                                            },
+                                            "number_of_enrollments": {
+                                                "description": "Total number of enrollments in the course",
+                                                "type": "integer"
+                                            },
+                                            "duration": {
+                                                "description": "Total duration of all lessons in the course in minutes",
+                                                "type": "number",
+                                                "format": "float"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No courses found for the user"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/course/delete/{id}": {
+            "delete": {
+                "summary": "Deletes a specific course",
+                "operationId": "11f8bd4c61035072d147c6da421b2a88",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the course to be deleted",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Course deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Course deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Course not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Course not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to delete the course due to an internal error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Failed to delete the Course"
+                                        },
+                                        "error": {
+                                            "description": "Error message detailing the internal error",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/course/update/{id}": {
+            "post": {
+                "summary": "Updates a specific course",
+                "operationId": "36a0cf9b7294506e27da6c001514c337",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the course to be updated",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Data and files needed to update the course",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "category_id",
+                                    "level_id",
+                                    "video",
+                                    "thumbnail"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "description": "Title of the course",
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "description": "Description of the course",
+                                        "type": "string"
+                                    },
+                                    "price": {
+                                        "description": "Price of the course",
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "category_id": {
+                                        "description": "ID of the category the course belongs to",
+                                        "type": "integer"
+                                    },
+                                    "level_id": {
+                                        "description": "ID of the difficulty level of the course",
+                                        "type": "integer"
+                                    },
+                                    "tags": {
+                                        "description": "Comma-separated tags associated with the course",
+                                        "type": "string"
+                                    },
+                                    "video": {
+                                        "description": "Video file for the course",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "thumbnail": {
+                                        "description": "Thumbnail image for the course",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Course updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Course updated successfully"
+                                        },
+                                        "data": {
+                                            "description": "Updated course data",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Course not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Course not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to update the course due to an internal error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message detailing the internal error",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/course/{courseId}/enroll": {
+            "post": {
+                "summary": "Enrolls a user into a specified course",
+                "operationId": "ef1e20b63dc372d99bef75031c19b874",
+                "parameters": [
+                    {
+                        "name": "courseId",
+                        "in": "path",
+                        "description": "The ID of the course to enroll in",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "User ID needed to enroll in the course",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "user_id"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "description": "The user's ID",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Enrollment successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user_id": {
+                                            "description": "User's ID",
+                                            "type": "integer"
+                                        },
+                                        "course_id": {
+                                            "description": "Course ID",
+                                            "type": "integer"
+                                        },
+                                        "enrollment_status": {
+                                            "description": "Status of the enrollment",
+                                            "type": "string"
+                                        },
+                                        "enrollment_date": {
+                                            "description": "Date and time of enrollment",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error or user does not exist"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/album/get/{userId}": {
+            "get": {
+                "summary": "Retrieves all favorite albums for a specific user",
+                "operationId": "201fe8c1db06c7d2be2926b7a48bfa19",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "The user ID to retrieve favorite albums for",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of favorite albums",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "albums": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "ID of the album",
+                                                        "type": "integer"
+                                                    },
+                                                    "user_id": {
+                                                        "description": "ID of the user who owns the album",
+                                                        "type": "integer"
+                                                    },
+                                                    "title": {
+                                                        "description": "Title of the album",
+                                                        "type": "string"
+                                                    },
+                                                    "favorites_count": {
+                                                        "description": "Number of favorites in the album",
+                                                        "type": "integer"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No albums found for the user"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/album/create": {
+            "post": {
+                "summary": "Creates a new favorite album",
+                "operationId": "14c2bf57d46885014794cc530037f2ee",
+                "requestBody": {
+                    "description": "Data needed to create a new album",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "userId"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "description": "Title of the new album",
+                                        "type": "string"
+                                    },
+                                    "userId": {
+                                        "description": "User ID of the album owner",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Album created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Success message",
+                                            "type": "string"
+                                        },
+                                        "album": {
+                                            "properties": {
+                                                "id": {
+                                                    "description": "ID of the newly created album",
+                                                    "type": "integer"
+                                                },
+                                                "title": {
+                                                    "description": "Title of the album",
+                                                    "type": "string"
+                                                },
+                                                "user_id": {
+                                                    "description": "User ID of the album owner",
+                                                    "type": "integer"
+                                                },
+                                                "created_at": {
+                                                    "description": "Time when the album was created",
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "updated_at": {
+                                                    "description": "Time when the album was last updated",
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input, missing title or userId"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/courses/save": {
+            "post": {
+                "summary": "Saves a course to a user's favorite album",
+                "operationId": "d07ddd2a6c3e2095ff911bab1d7c6c55",
+                "requestBody": {
+                    "description": "Data needed to save a course to an album",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "courseId",
+                                    "albumId"
+                                ],
+                                "properties": {
+                                    "courseId": {
+                                        "description": "ID of the course to be saved",
+                                        "type": "integer"
+                                    },
+                                    "albumId": {
+                                        "description": "ID of the album where the course is to be saved",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Course saved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Success message indicating the course has been saved",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/album/saved/get/{albumId}": {
+            "get": {
+                "summary": "Retrieves all courses saved in a specified favorite album",
+                "operationId": "53cd696412fd38a685f2b453e6627d1c",
+                "parameters": [
+                    {
+                        "name": "albumId",
+                        "in": "path",
+                        "description": "The ID of the favorite album to retrieve courses from",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of saved courses",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "course_id": {
+                                                "description": "ID of the course",
+                                                "type": "integer"
+                                            },
+                                            "course_title": {
+                                                "description": "Title of the course",
+                                                "type": "string"
+                                            },
+                                            "course_tags": {
+                                                "description": "Tags associated with the course",
+                                                "type": "string"
+                                            },
+                                            "course_thumbnail": {
+                                                "description": "URL of the course thumbnail image",
+                                                "type": "string"
+                                            },
+                                            "author": {
+                                                "description": "Name of the course author",
+                                                "type": "string"
+                                            },
+                                            "category_name": {
+                                                "description": "Name of the category to which the course belongs",
+                                                "type": "string"
+                                            },
+                                            "course_price": {
+                                                "description": "Price of the course",
+                                                "type": "number",
+                                                "format": "float"
+                                            },
+                                            "number_of_lessons": {
+                                                "description": "Total number of lessons in the course",
+                                                "type": "integer"
+                                            },
+                                            "number_of_enrollments": {
+                                                "description": "Total number of enrollments in the course",
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No saved courses in this album",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message indicating no courses found in the album",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/forgot/password": {
+            "post": {
+                "summary": "Sends a password reset link to the user's email",
+                "operationId": "ccd8256ea0ac06791f8713e4ba4cc69f",
+                "requestBody": {
+                    "description": "Email address to which the reset link will be sent",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "description": "User's email address",
+                                        "type": "string",
+                                        "format": "email"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Reset link sent successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Success message indicating the reset link was sent",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error or the email is not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message detailing the issue with the request",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message indicating an internal error occurred",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/course/{courseId}/lessons": {
+            "get": {
+                "summary": "Retrieves all lessons for a specific course",
+                "operationId": "2bcb5a5a16ddedf503b59006d773a1ce",
+                "parameters": [
+                    {
+                        "name": "courseId",
+                        "in": "path",
+                        "description": "The ID of the course to retrieve lessons from",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of lessons",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "ID of the lesson",
+                                                "type": "integer"
+                                            },
+                                            "course_id": {
+                                                "description": "ID of the course the lesson belongs to",
+                                                "type": "integer"
+                                            },
+                                            "title": {
+                                                "description": "Title of the lesson",
+                                                "type": "string"
+                                            },
+                                            "content": {
+                                                "description": "Content of the lesson",
+                                                "type": "string"
+                                            },
+                                            "created_at": {
+                                                "description": "Creation date of the lesson",
+                                                "type": "string",
+                                                "format": "date-time"
+                                            },
+                                            "updated_at": {
+                                                "description": "Last update date of the lesson",
+                                                "type": "string",
+                                                "format": "date-time"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No lessons found for the course",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message indicating no lessons found",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message detailing an internal error",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/course/lesson/create": {
+            "post": {
+                "summary": "Creates a new lesson for a specified course",
+                "operationId": "beedfc949d532e763e9511795ec8ee9c",
+                "requestBody": {
+                    "description": "Data and video needed to create a new lesson",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "course_id",
+                                    "title",
+                                    "video_url",
+                                    "content",
+                                    "duration"
+                                ],
+                                "properties": {
+                                    "course_id": {
+                                        "description": "ID of the course this lesson belongs to",
+                                        "type": "integer"
+                                    },
+                                    "title": {
+                                        "description": "Title of the lesson",
+                                        "type": "string"
+                                    },
+                                    "video_url": {
+                                        "description": "Video file for the lesson",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "content": {
+                                        "description": "Content of the lesson",
+                                        "type": "string"
+                                    },
+                                    "duration": {
+                                        "description": "Duration of the video in seconds",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Lesson created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "ID of the newly created lesson",
+                                            "type": "integer"
+                                        },
+                                        "video_url": {
+                                            "description": "URL of the lesson video",
+                                            "type": "string"
+                                        },
+                                        "title": {
+                                            "description": "Title of the lesson",
+                                            "type": "string"
+                                        },
+                                        "content": {
+                                            "description": "Content of the lesson",
+                                            "type": "string"
+                                        },
+                                        "duration": {
+                                            "description": "Duration of the lesson in HH:MM:SS format",
+                                            "type": "string"
+                                        },
+                                        "course_id": {
+                                            "description": "ID of the course the lesson belongs to",
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message detailing the validation error",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message indicating an internal error occurred",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/course/{courseId}/lesson": {
+            "get": {
+                "summary": "Retrieves all lessons for a specific course",
+                "operationId": "2005da70e38c4d4dd044fc332e3bb7d7",
+                "parameters": [
+                    {
+                        "name": "courseId",
+                        "in": "path",
+                        "description": "The ID of the course to retrieve lessons from",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of lessons",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "ID of the lesson",
+                                                "type": "integer"
+                                            },
+                                            "course_id": {
+                                                "description": "ID of the course the lesson belongs to",
+                                                "type": "integer"
+                                            },
+                                            "title": {
+                                                "description": "Title of the lesson",
+                                                "type": "string"
+                                            },
+                                            "content": {
+                                                "description": "Content of the lesson",
+                                                "type": "string"
+                                            },
+                                            "created_at": {
+                                                "description": "Creation date of the lesson",
+                                                "type": "string",
+                                                "format": "date-time"
+                                            },
+                                            "updated_at": {
+                                                "description": "Last update date of the lesson",
+                                                "type": "string",
+                                                "format": "date-time"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No lessons found for the course",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message indicating no lessons found",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message detailing an internal error",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/course/lesson/update/{id}": {
+            "post": {
+                "summary": "Updates an existing lesson",
+                "operationId": "581e5f63f4e32da95c5f1eb696a706a4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the lesson to be updated",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Data needed to update the lesson",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "duration",
+                                    "video_url"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "description": "New title of the lesson",
+                                        "type": "string"
+                                    },
+                                    "content": {
+                                        "description": "New content of the lesson, can be nullable",
+                                        "type": "string"
+                                    },
+                                    "duration": {
+                                        "description": "New duration of the lesson video in seconds",
+                                        "type": "integer"
+                                    },
+                                    "video_url": {
+                                        "description": "New video file for the lesson",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Lesson updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "description": "Indicates successful update",
+                                            "type": "boolean"
+                                        },
+                                        "message": {
+                                            "description": "Success message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "description": "ID of the lesson",
+                                                    "type": "integer"
+                                                },
+                                                "title": {
+                                                    "description": "Updated title of the lesson",
+                                                    "type": "string"
+                                                },
+                                                "content": {
+                                                    "description": "Updated content of the lesson",
+                                                    "type": "string"
+                                                },
+                                                "duration": {
+                                                    "description": "Updated duration in HH:MM:SS format",
+                                                    "type": "string"
+                                                },
+                                                "video_url": {
+                                                    "description": "URL of the updated video",
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Lesson not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "description": "False indicating update failure",
+                                            "type": "boolean"
+                                        },
+                                        "message": {
+                                            "description": "Error message stating lesson not found",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message detailing the server issue",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/lessons/{id}": {
+            "delete": {
+                "summary": "Deletes a specific lesson",
+                "operationId": "99aa9412368d3fb60714b81704a66924",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the lesson to be deleted",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lesson deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Lesson deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Lesson not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Lesson not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to delete the lesson due to an internal error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Failed to delete the lesson"
+                                        },
+                                        "error": {
+                                            "description": "Error message detailing the internal error",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/levels/get": {
+            "get": {
+                "summary": "Retrieves all levels",
+                "operationId": "c929396c46899eb1286d323af8dbe25e",
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of all levels",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "ID of the level",
+                                                "type": "integer"
+                                            },
+                                            "name": {
+                                                "description": "Name of the level",
+                                                "type": "string"
+                                            },
+                                            "description": {
+                                                "description": "Description of the level, if available",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message detailing an internal error",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/password/reset": {
+            "post": {
+                "summary": "Resets a user's password using a reset token",
+                "operationId": "d51a830f33bed5fe5c2a2e2bc97543ce",
+                "requestBody": {
+                    "description": "Required data for resetting the password",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "token",
+                                    "email",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "token": {
+                                        "description": "Password reset token",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "User's email address",
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "description": "New password",
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "Confirmation of the new password",
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Password reset successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Success message indicating the password was reset successfully",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to reset the password",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message detailing why the password reset failed",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message detailing an internal error",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/reviews": {
+            "post": {
+                "summary": "Creates a new review for a course",
+                "operationId": "8c009bfb5ff11929704db44decf7e5b3",
+                "requestBody": {
+                    "description": "Data needed to create a new review",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "user_id",
+                                    "course_id",
+                                    "rating",
+                                    "comment"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "description": "ID of the user submitting the review",
+                                        "type": "integer"
+                                    },
+                                    "course_id": {
+                                        "description": "ID of the course being reviewed",
+                                        "type": "integer"
+                                    },
+                                    "rating": {
+                                        "description": "Rating given to the course (1 to 5)",
+                                        "type": "integer"
+                                    },
+                                    "comment": {
+                                        "description": "Textual comment of the review, max 200 characters",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Review submitted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Success message indicating the review was successfully submitted",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message detailing the validation error",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message detailing an internal error",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/course/{courseId}/reviews": {
+            "get": {
+                "summary": "Retrieves a course along with its reviews",
+                "operationId": "625e8a05d54430b6187c12716d600db8",
+                "parameters": [
+                    {
+                        "name": "courseId",
+                        "in": "path",
+                        "description": "The ID of the course to retrieve details for",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detailed information about the course including reviews",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "course_id": {
+                                            "description": "ID of the course",
+                                            "type": "integer"
+                                        },
+                                        "author": {
+                                            "description": "Name of the course author",
+                                            "type": "string"
+                                        },
+                                        "reviews": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "user": {
+                                                        "description": "Name of the user who wrote the review",
+                                                        "type": "string"
+                                                    },
+                                                    "review_text": {
+                                                        "description": "Text of the review",
+                                                        "type": "string"
+                                                    },
+                                                    "rating": {
+                                                        "description": "Rating given by the user",
+                                                        "type": "integer"
+                                                    },
+                                                    "user_id": {
+                                                        "description": "ID of the user who wrote the review",
+                                                        "type": "integer"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Course not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message indicating the course was not found",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message detailing an internal error",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/search/{query}": {
+            "get": {
+                "summary": "Searches for users and courses based on a query string",
+                "operationId": "dd05305c24c0cebcd44ef82da4d8398b",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "path",
+                        "description": "The search query used to find users and courses",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Search results for users and courses",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "users": {
+                                            "description": "List of users matching the search query",
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "User ID",
+                                                        "type": "integer"
+                                                    },
+                                                    "name": {
+                                                        "description": "User's name",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "courses": {
+                                            "description": "List of courses matching the search query",
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Course ID",
+                                                        "type": "integer"
+                                                    },
+                                                    "title": {
+                                                        "description": "Course title",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message detailing an internal error",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/user/create": {
+            "post": {
+                "summary": "Register a new user",
+                "operationId": "5fc65c71b56a1f13d79a511f117891d8",
+                "requestBody": {
+                    "description": "Data required to register a new user",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "firstName",
+                                    "lastName",
+                                    "email",
+                                    "username",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "firstName": {
+                                        "description": "First name of the user",
+                                        "type": "string"
+                                    },
+                                    "lastName": {
+                                        "description": "Last name of the user",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "Email address of the user",
+                                        "type": "string"
+                                    },
+                                    "username": {
+                                        "description": "Username for the user",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "Password for the user",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User registered successfully"
+                    },
+                    "400": {
+                        "description": "User already exists or validation failed"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/auth/user/login": {
+            "post": {
+                "summary": "Authenticate user and generate JWT token",
+                "operationId": "c682a6b135dd1611707b28baedbe1174",
+                "requestBody": {
+                    "description": "Credentials needed for authentication",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "username",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "username": {
+                                        "description": "User's username",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "User's password",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Authentication successful, JWT token returned"
+                    },
+                    "401": {
+                        "description": "Invalid credentials or authentication failed"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "422": {
+                        "description": "Validation errors"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/user": {
+            "get": {
+                "summary": "Returns the authenticated user's details",
+                "operationId": "2130b7cce3aebae5b2f0aecd8f3cf0d3",
+                "responses": {
+                    "200": {
+                        "description": "Authenticated user's details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "description": "JWT Token",
+                                            "type": "string"
+                                        },
+                                        "token_type": {
+                                            "description": "Token type, typically 'bearer'",
+                                            "type": "string"
+                                        },
+                                        "expires_in": {
+                                            "description": "Time in minutes until token expiration",
+                                            "type": "integer"
+                                        },
+                                        "user": {
+                                            "description": "Detailed user information",
+                                            "properties": {
+                                                "id": {
+                                                    "description": "User ID",
+                                                    "type": "integer"
+                                                },
+                                                "first_name": {
+                                                    "description": "User's first name",
+                                                    "type": "string"
+                                                },
+                                                "last_name": {
+                                                    "description": "User's last name",
+                                                    "type": "string"
+                                                },
+                                                "username": {
+                                                    "description": "User's username",
+                                                    "type": "string"
+                                                },
+                                                "email": {
+                                                    "description": "User's email address",
+                                                    "type": "string"
+                                                },
+                                                "bio": {
+                                                    "description": "User's biography",
+                                                    "type": "string"
+                                                },
+                                                "profile_picture": {
+                                                    "description": "URL to user's profile picture",
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized if token is invalid or missing"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/user/logout": {
+            "post": {
+                "summary": "Logs out the user by invalidating the JWT token",
+                "operationId": "06f06a7a7ef125d6c0d1fff7b5af084a",
+                "responses": {
+                    "200": {
+                        "description": "User successfully logged out",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Success message upon logging out",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error if the logout process fails",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message if logout fails",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/user/toptutors": {
+            "get": {
+                "summary": "Fetches the top 5 tutors based on recent enrollments and reviews",
+                "operationId": "c7a6b7a107cb70ddb9466c21160b1d86",
+                "responses": {
+                    "200": {
+                        "description": "Successful retrieval of top tutors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "tutor_id": {
+                                                "description": "The tutor's unique identifier",
+                                                "type": "integer"
+                                            },
+                                            "tutor_name": {
+                                                "description": "Full name of the tutor",
+                                                "type": "string"
+                                            },
+                                            "profile_picture": {
+                                                "description": "URL to the tutor's profile picture",
+                                                "type": "string"
+                                            },
+                                            "tutor_username": {
+                                                "description": "Tutor's username",
+                                                "type": "string"
+                                            },
+                                            "average_rating": {
+                                                "description": "Average rating of the tutor based on recent reviews",
+                                                "type": "number",
+                                                "format": "float"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No tutors found"
+                    },
+                    "500": {
+                        "description": "Internal server error if there is a problem fetching the data"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    }
+}

@@ -9,6 +9,59 @@ use Illuminate\Support\Facades\DB;
 
 class SearchController extends Controller
 {
+
+    /**
+ * @OA\Get(
+ *     path="/api/search/{query}",
+ *     summary="Searches for users and courses based on a query string",
+ *     @OA\Parameter(
+ *         name="query",
+ *         in="path",
+ *         required=true,
+ *         description="The search query used to find users and courses",
+ *         @OA\Schema(
+ *             type="string"
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Search results for users and courses",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(
+ *                 property="users",
+ *                 type="array",
+ *                 description="List of users matching the search query",
+ *                 @OA\Items(
+ *                     type="object",
+ *                     @OA\Property(property="id", type="integer", description="User ID"),
+ *                     @OA\Property(property="name", type="string", description="User's name")
+ *                 )
+ *             ),
+ *             @OA\Property(
+ *                 property="courses",
+ *                 type="array",
+ *                 description="List of courses matching the search query",
+ *                 @OA\Items(
+ *                     type="object",
+ *                     @OA\Property(property="id", type="integer", description="Course ID"),
+ *                     @OA\Property(property="title", type="string", description="Course title")
+ *                 )
+ *             )
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response="500",
+ *         description="Internal server error",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(property="error", type="string", description="Error message detailing an internal error")
+ *         )
+ *     )
+ * )
+ */
+
+
     public function search(Request $request, $query){
         $searchUsers = $this->searchUsers($query);
         $searchCourses = $this->searchCourses($query);
